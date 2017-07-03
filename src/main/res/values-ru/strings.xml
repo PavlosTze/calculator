@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name"><b>Калькулятор</b></string>
+    <string name="change_theme">Смeнa тeмЫ</string>
+    <string name="history">Архив</string>
+    <string name="rate">Оставить отзыв!</string>
+    <string name="about">Информация</string>
+    <string name="aboutText">Eсли вам нужна какая-нибудь информация, если у вас есть какое-то предложение
+        или у вас есть какая-та проблема отправьте на мой почтовый ящик сообщение по адресу : pavlostze@gmail.com\n\n
+        Не забудьте оставить вашу оценку и ваше мнение на play store.\n Благодарю вас за использование сборки (программы)
+    \n\n Текущая версия: 1.6</string>
+    <string name="divisionZero">ОШИБКА деление на ноль ( невозможно)</string>
+
+    <string name="cancel">Отмена</string>
+    <string name="vibrate">вибрация</string>
+    <string name="ClearHistory">УДАЛЕНИЕ АРХИВА</string>
+    <string name="displayFormat">Формат отображения</string>
+    <string name="selectDisplay">Выберите формат экрана</string>
+    <string name="ratedialog">Оставить отзыв!</string>
+    <string name="rateandreviewdialog">Да я хочу рассмотреть калькулятор!</string>
+    <string name="nothanksdialog"> Нет, спасибо!</string>
+    <string name="remindmelaterdialog">напомните мне позже!</string>
+    <string name="textdialog">\nЕсли вы любите Калькулятор, пожалуйста, оставьте уровень и обзор. Спасибо!\n</string>
+</resources>

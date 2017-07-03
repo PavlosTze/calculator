@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ca030305"
+    android:clickable="false"
+    android:paddingBottom="3dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:rowCount="8"
+    android:theme="@android:style/Theme.Holo.Light"
+    android:weightSum="1"
+    tools:context="com.tzegian.Calculator.MainActivity">
+
+
+    <com.tzegian.Calculator.CustomHorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_column="2"
+        android:layout_gravity="left|bottom|right|fill"
+        android:layout_row="0"
+        android:background="#fde4bf"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/operationsFull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAlignment="textEnd"
+            android:textIsSelectable="true"
+            android:textSize="30sp" />
+    </com.tzegian.Calculator.CustomHorizontalScrollView>
+
+    <com.tzegian.Calculator.CustomHorizontalScrollView
+        android:id="@+id/horizontalScrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|bottom|right|fill"
+        android:layout_row="1"
+        android:background="#fde4bf"
+        android:gravity="right"
+        android:textAlignment="textEnd">
+
+        <TextView
+            android:id="@+id/operationsRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAlignment="textEnd"
+            android:textIsSelectable="true"
+            android:textSize="50sp" />
+    </com.tzegian.Calculator.CustomHorizontalScrollView>
+
+    <com.tzegian.Calculator.CustomHorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|bottom|right|fill"
+        android:layout_row="2"
+        android:background="#fde4bf"
+        android:gravity="right"
+        android:textAlignment="textEnd">
+
+        <TextView
+            android:id="@+id/resultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:singleLine="true"
+            android:text="@string/zero"
+            android:textAlignment="textEnd"
+            android:textIsSelectable="true"
+            android:textSize="80sp" />
+    </com.tzegian.Calculator.CustomHorizontalScrollView>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|right"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_row="3"
+        android:weightSum="1">
+
+        <!--suppress AndroidMissingOnClickHandler -->
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_clear_light_selector"
+            android:onClick="@string/ClearText"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/clear"
+            android:textColor="#000000"
+            android:textSize="60sp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="366dp"
+            android:layout_height="match_parent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <Button
+                            android:id="@+id/posNeg"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/onClick"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/posNeg"
+                            android:textColor="#000000"
+                            android:textSize="60sp" />
+
+                        <Button
+                            android:id="@+id/percentage"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/onClick"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/percentage"
+                            android:textColor="#000000"
+                            android:textSize="60sp" />
+
+                        <Button
+                            android:id="@+id/divine"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/onClick"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/divine"
+                            android:textColor="#000000"
+                            android:textSize="60sp" />
+
+                        <Button
+                            android:id="@+id/sqrt"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/onClick"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/sqrt"
+                            android:textColor="#000000"
+                            android:textSize="60sp" />
+
+                        <Button
+                            android:id="@+id/x2"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/onClick"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/x2"
+                            android:textColor="#000000"
+                            android:textSize="60sp" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <Button
+                            android:id="@+id/memread"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/memoryRead"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/memread"
+                            android:textColor="#000000"
+                            android:textSize="50sp" />
+
+                        <Button
+                            android:id="@+id/memadd"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/memoryAdd"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/memadd"
+                            android:textColor="#000000"
+                            android:textSize="50sp" />
+
+                        <Button
+                            android:id="@+id/memsub"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/memorySub"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/memsub"
+                            android:textColor="#000000"
+                            android:textSize="50sp" />
+
+                        <Button
+                            android:id="@+id/memclear"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/button_ops_pink_selector"
+                            android:onClick="@string/memoryClear"
+                            android:shadowColor="#FFFFFF"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="7"
+                            android:text="@string/memclear"
+                            android:textColor="#000000"
+                            android:textSize="50sp" />
+
+
+                    </TableRow>
+                </LinearLayout>
+            </ScrollView>
+        </HorizontalScrollView>
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_del_light_selector"
+            android:onClick="@string/onClickDel"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/del"
+            android:textColor="#FFFCFC"
+            android:textSize="60sp"
+            android:textStyle="bold|italic" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|right"
+        android:layout_marginBottom="2dp"
+        android:layout_row="4">
+
+        <Button
+            android:id="@+id/seven"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/seven"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/eight"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/eight"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/nine"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/nine"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/multiply"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_ops_pink_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/multiply"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|right"
+        android:layout_marginBottom="2dp"
+        android:layout_row="5">
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/four"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:clickable="true"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/five"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/six"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/subtract"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_ops_pink_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/subtract"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="left|right"
+        android:layout_marginBottom="2dp"
+        android:layout_row="6"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/one"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_column="0"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/one"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/two"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/two"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_column="2"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/three"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_ops_pink_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/add"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="left|right"
+        android:layout_row="7"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/zero"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/zero"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/comma"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:adjustViewBounds="false"
+            android:background="@drawable/button_numbers_main_female_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/comma"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/result"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_ops_pink_selector"
+            android:onClick="@string/onClick"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/result"
+            android:textColor="#000000"
+            android:textSize="60sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+</GridLayout>

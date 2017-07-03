@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><b>Calculadora</b></string>
+    <string name="about">Acerca de</string>
+    <string name="change_theme">Cambiar el tema</string>
+    <string name="history">Historial</string>
+    <string name="rate">Dejen su comentario.</string>
+    <string name="aboutText">Para más información, sugerencias o quejas, por favor póngase en contacto por e-mail
+        \npavlostze@gmail.com\n\n
+        No se olviden de dejar su comentario y su valoración en play store.\n
+        Gracias por utilizar la aplicación.\n\n Versión actual: 1.6</string>
+    <string name="divisionZero">Error: División por cero.</string>
+
+    <string name="cancel">Anular</string>
+    <string name="vibrate">Vibración</string>
+    <string name="ClearHistory">Borrar historial</string>
+    <string name="displayFormat">Formato de visualización</string>
+    <string name="selectDisplay">Seleccione el formato de visualización</string>
+    <string name="ratedialog">Dejen su comentario.</string>
+    <string name="nothanksdialog">No, gracias.</string>
+    <string name="remindmelaterdialog">Recordar más tarde.</string>
+    <string name="rateandreviewdialog">Si. Quiero Revisar la calculadora!</string>
+    <string name="textdialog">Si te gusta la calculadora , por favor dejar un comentario . Gracias !</string>
+
+</resources>

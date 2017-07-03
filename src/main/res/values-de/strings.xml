@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name"><b>Taschenrechner</b></string>
+    <string name="change_theme">Aussehen ändern</string>
+    <string name="history">Verlauf</string>
+    <string name="rate">Diese App bewerten!</string>
+    <string name="about">Über…</string>
+    <string name="aboutText">Für Fragen, Anregungen oder Fehler kontaktieren Sie mich unter: pavlostze@gmail.com\n\n
+        Bitte bewerten und kommentieren Sie diese im PlayStore.\n Vielen Dank für die Nutzung dieser App.\n\n App Version: 1.6 </string>
+    <string name="divisionZero">Fehler: Division durch Null.</string>
+    <string name="cancel">Abbruch</string>
+    <string name="vibrate">Vibration</string>
+    <string name="ClearHistory">Verlauf löschen</string>
+    <string name="displayFormat">Anzeigeformat</string>
+    <string name="selectDisplay">Anzeigeformat auswählen</string>
+    <string name="ratedialog">Taschenrechner bewerten!</string>
+    <string name="rateandreviewdialog">Ja, ich möchte den Taschenrechner bewerten!</string>
+    <string name="remindmelaterdialog">Später erinnern.</string>
+    <string name="nothanksdialog">Nein, Danke.</string>
+    <string name="textdialog">\nWenn Sie den Taschenrechner mögen, hinterlassen Sie bitte eine Bewertung und einen Kommentar. Vielen Dank!\n</string>
+</resources>

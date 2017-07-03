@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><b>Αριθμομηχανή</b></string>
+    <string name="about">Σχετικά..</string>
+    <string name="change_theme">Αλλαγή Θέματος</string>
+    <string name="history">Ιστορικό</string>
+    <string name="rate">Άφησε μια κριτική!</string>
+    <string name="aboutText">Για οποιαδήποτε πληροφορία, πρόταση ή για να αναφέρετε ένα πρόβλημα στείλτε μου email στο:
+        \npavlostze@gmail.com\n\n
+        Μην ξεχάσετε να αφήσετε μια βαθμολογία και ένα σχόλιο στο play store.\n
+        Ευχαριστώ που χρησιμοποιείτε την εφαρμογή.\n\n Έκδοση Εφαρμογής: 1.6</string>
+    <string name="divisionZero">Σφάλμα: Διαίρεση με το 0.</string>
+
+    <string name="cancel">Ακύρωση</string>
+    <string name="vibrate">Δόνηση</string>
+    <string name="ClearHistory">Εκκαθάριση ιστορικού</string>
+    <string name="displayFormat">Μορφή Εμφάνισης</string>
+    <string name="selectDisplay">Επιλέξτε Μορφή Εμφάνισης</string>
+
+    <string name="nothanksdialog">Όχι, ευχαριστώ!</string>
+    <string name="rateandreviewdialog">Θέλω να αφήσω μια κριτική!</string>
+    <string name="ratedialog">Άφησε μια κριτική!</string>
+    <string name="remindmelaterdialog">Θύμησε το μου αργότερα.</string>
+    <string name="textdialog">\nΑν σου αρέσει η Αριθμομηχανή, άφησε μια βαθμολογία και μια κριτική. Ευχαριστώ!\n</string>
+
+</resources>

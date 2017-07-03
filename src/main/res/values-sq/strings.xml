@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><b>Kalkulatriçe</b></string>
+    <string name="about">Rreth..</string>
+    <string name="change_theme">Ndryshimi Theme</string>
+    <string name="history">Rekord</string>
+    <string name="rate">Lini një shqyrtim !</string>
+    <string name="aboutText">Për çdo informacion, sugjerim apo për të raportuar një problem , email mua në:
+        \npavlostze@gmail.com\n\n
+        Mos harroni të lënë një vlerësim dhe një koment në dyqan luajnë.\n
+        Faleminderit për duke përdorur aplikacionin.\n\n Versioni i tanishëm: 1.6</string>
+    <string name="divisionZero">Gabim : Division me 0.</string>
+
+    <string name="cancel">Anulim</string>
+    <string name="vibrate">Dridhje</string>
+    <string name="ClearHistory">Historia e qartë</string>
+    <string name="displayFormat">Format display</string>
+    <string name="selectDisplay">Zgjidhni Format Afisho</string>
+    <string name="nothanksdialog">Jo, faleminderit</string>
+    <string name="ratedialog">Lini një shqyrtim !</string>
+    <string name="rateandreviewdialog">Po. Unë dua për të lënë një rishikim për Kalkulatriçe !</string>
+    <string name="remindmelaterdialog">Me kujto me vone</string>
+    <string name="textdialog">\nNëse ju pëlqen Kalkulatriçe , të lënë një vlerësim dhe një shqyrtim . Faleminderit!\n</string>
+
+</resources>

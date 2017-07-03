@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name"><b>Calculator</b></string>
+    <string name="change_theme">Change Theme</string>
+    <string name="history">History</string>
+    <string name="rate">Rate this app!</string>
+    <string name="about">About</string>
+    <string name="aboutText">For any questions, suggestions or bugs please contact me on email: pavlostze@gmail.com\n\n
+        Don\'t forget to rate and comment on play store.\n Many thanks for using the app.\n App Version: 1.6 </string>
+    <string name="divisionZero">Error: Division by zero.</string>
+    <string name="cancel">Cancel</string>
+    <string name="vibrate">Vibration</string>
+    <string name="ClearHistory">Clear History</string>
+    <string name="displayFormat">Display Format</string>
+    <string name="selectDisplay">Select Display Format</string>
+    <string name="ratedialog">Rate Calculator!</string>
+    <string name="rateandreviewdialog">Yes. I want to rate Calculator!</string>
+    <string name="remindmelaterdialog">Remind me later.</string>
+    <string name="nothanksdialog">No, thanks.</string>
+    <string name="textdialog">\nIf you like the Calculator, please leave a rate and a review. Thank you!\n</string>
+
+    <string name="firstLaunch" translatable="false">"Hello and thanks for using this app. This app does NOT have advertisement.\n\nIt has the option to take a survey (only 1 each day for each user) and this option is available when a small red rectangle indicator shows up at the top left of the screen.\n\nIf you want to help me and say a thank you please take a survey, it can be completed in 1 minute.\n\nThe red indicator can be closed if you do not want to see it or take a survey.\n\nThank you very much for your understanding and I hope you help me to keep working on this project."</string>
+    <string name="firstLaunchTitle" translatable="false">"First Launch."</string>
+    <string name="OK" translatable="false">"OK"</string>
+    <string name="dotComma" translatable="false">"1.000,50"</string>
+    <string name="commaDot" translatable="false">"1,000.50"</string>
+    <string name="spaceDot" translatable="false">"1 000.50"</string>
+    <string name="spaceComma" translatable="false">"1 000,50"</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="four" translatable="false">4</string>
+    <string name="five" translatable="false">5</string>
+    <string name="six" translatable="false">6</string>
+    <string name="seven" translatable="false">7</string>
+    <string name="eight" translatable="false">8</string>
+    <string name="nine" translatable="false">9</string>
+    <string name="add" translatable="false">+</string>
+    <string name="subtract" translatable="false">−</string>
+    <string name="divide" translatable="false">÷</string>
+    <string name="multiply" translatable="false">×</string>
+    <string name="percentage" translatable="false">%</string>
+    <string name="del" translatable="false">DEL</string>
+    <string name="clear" translatable="false">C</string>
+    <string name="result" translatable="false">=</string>
+    <string name="posNeg" translatable="false">±</string>
+    <string name="comma" translatable="false">.</string>
+    <string name="sqrt" translatable="false">√</string>
+    <string name="x2" translatable="false">x²</string>
+
+    <string name="memread" translatable="false">MR</string>
+    <string name="memclear" translatable="false">MC</string>
+    <string name="memadd" translatable="false">M+</string>
+    <string name="memsub" translatable="false">M-</string>
+
+    <string name="memory" translatable="false">memory</string>
+
+    <string name="memoryAdd" translatable="false">memoryAdd</string>
+    <string name="memorySub" translatable="false">memorySub</string>
+    <string name="memoryRead" translatable="false">memoryRead</string>
+    <string name="memoryClear" translatable="false">memoryClear</string>
+    <string name="ClearText" translatable="false">clearTexts</string>
+    <string name="activityMain" translatable="false">activity_main</string>
+    <string name="activityMainGreen" translatable="false">activity_main_green</string>
+    <string name="activityMainPink" translatable="false">activity_main_pink</string>
+    <string name="activityMainDarkModern" translatable="false">activity_main_dark_modern</string>
+    <string name="activityMainLightModern" translatable="false">activity_main_light_modern</string>
+    <string name="activityMainPinkModern" translatable="false">activity_main_pink_modern</string>
+    <string name="onClick" translatable="false">onClick</string>
+    <string name="emptyString" translatable="false"></string>
+    <string name="onClickDel" translatable="false">onClickDel</string>
+</resources>

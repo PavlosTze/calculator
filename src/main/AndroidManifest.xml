@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tzegian.Calculator"
+    android:versionCode="15"
+    android:versionName="1.6"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
+    <uses-sdk android:minSdkVersion="16"
+        android:targetSdkVersion="24" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name="com.tzegian.Calculator.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tzegian.Calculator.DisplayAbout"
+            android:label="@string/about"
+            android:parentActivityName="com.tzegian.Calculator.MainActivity">
+        </activity>
+        <activity
+            android:name="com.tzegian.Calculator.History"
+            android:label="@string/history"
+            android:parentActivityName="com.tzegian.Calculator.MainActivity">
+        </activity>
+        <activity
+            android:name="com.tzegian.Calculator.ChangeTheme"
+            android:label="@string/change_theme"
+            android:parentActivityName="com.tzegian.Calculator.MainActivity">
+        </activity>
+        <activity
+            android:name="com.tzegian.Calculator.AppRater"
+            android:label="@string/ratedialog"
+            android:parentActivityName="com.tzegian.Calculator.MainActivity">
+        </activity>
+    </application>
+
+</manifest>

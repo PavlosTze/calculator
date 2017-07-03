@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name"><b>Calcolatrice</b></string>
+    <string name="change_theme">Cambiare il tema</string>
+    <string name="history">Cronologia</string>
+    <string name="rate">Lasciate un commento!</string>
+    <string name="about">Informazioni</string>
+    <string name="aboutText">Per qualunque domanda, suggestione o per riferire possibile problema mi potete contattare su: pavlostze@gmail.com\n\n
+        Vi prego di non dimenticare di lasciare feedback e commentare su play store.\n Vi ringrazio per l\'utilizzo del applicazione
+    \n\n Versione attuale: 1.6</string>
+    <string name="divisionZero">Errore: Divisione con lo zero</string>
+
+    <string name="cancel">Cancellazione</string>
+    <string name="vibrate">Vibrazione attiva</string>
+    <string name="ClearHistory">Cancella cronologia</string>
+    <string name="displayFormat">Formato di visualizzazione</string>
+    <string name="selectDisplay">Selezionare il formato di visualizzazione</string>
+    <string name="ratedialog">Lasciate un commento!</string>
+    <string name="nothanksdialog">No, grazie.</string>
+    <string name="remindmelaterdialog">Ricordamelo tardi.</string>
+    <string name="rateandreviewdialog">Sì. Voglio lasciare un commento!</string>
+    <string name="textdialog">Se vi piace la calcolatrice , si prega di lasciare un commento . Grazie !</string>
+</resources>

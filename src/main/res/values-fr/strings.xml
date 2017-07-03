@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name"><b>Calculatrice</b></string>
+    <string name="change_theme">Changement du thème</string>
+    <string name="history">Historique</string>
+    <string name="rate">Laissez une critique !</string>
+    <string name="about">À propos</string>
+    <string name="aboutText">Pour tout renseignement, proposition ou pour signaler un problème, veuillez m\'envoyer un email sur l\'adresse suivante : pavlostze@gmail.com\n\n
+N\'oubliez pas de laisser une note et un commentaire sur le play store.\n
+En vous remerciant pour l\'utilisation de mon application.\n\n Version actuelle: 1.6</string>
+    <string name="divisionZero">Erreur : divison par 0. </string>
+
+    <string name="cancel">Annuler</string>
+    <string name="vibrate">Vibration</string>
+    <string name="ClearHistory">Effacer l\'historique</string>
+    <string name="displayFormat">Format d\'affichage</string>
+    <string name="selectDisplay">Sélectionnez le format d\'affichage</string>
+    <string name="ratedialog">Laissez une critique !</string>
+    <string name="nothanksdialog">Non, merci.</string>
+    <string name="remindmelaterdialog">Rappelez-moi plus tard.</string>
+    <string name="rateandreviewdialog">Oui. Je passe en revue la calculatrice!</string>
+    <string name="textdialog">Si vous aimez la calculatrice , laissez s\'il vous plaît un commentaire . Je vous remercie !</string>
+
+</resources>
