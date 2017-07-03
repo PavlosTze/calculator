@@ -8,7 +8,7 @@ that no order of calculations exists (so that multiply for example is ahead of a
 
 ## Contributing
 
-This repo made mostly for showing off my work. I am not seeking for contributors right now. Thank you!
+This repo made for showing off my work/project. I am not seeking for contributors right now. Thank you!
 
 ## Authors
 
