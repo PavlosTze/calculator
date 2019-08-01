@@ -7,7 +7,9 @@ This is the main activity which runs at every app's launch.
 
 package com.tzegian.Calculator;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,8 +18,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private TextView result;            /* the textview related to result. when result changes, this variable changes too */
     private TextView ops;               /* textview related with current operation */
@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private double res = 0D;            /* result stored as a double */
     private double op1 = 0D;            /* first operator stored as a double */
     private double op2 = 0D;            /* second operator stored as a double */
-    
+
     private int whenToLookForOp2 = 0;   /* describes whether on the current click the user has typed a ready calculation 
                                            so we should find the second operator(such as 5+5 and not something like 5+)   
                                            and increments-decrements this variable depending of the current operation */
-    
+
     private boolean starting;           /* describes if user has already done some calculation or this will be the first one */
     private boolean error;              /* describes if user's calculations have an error (for example division with zero) */
     private boolean checkAtResult;      /* needed for making some extra actions when result button is clicked depending on some conditions if met or not */
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected static boolean isCheckedVibrator = true;  /* used for knowing whether user has vibration enabled or not */
     protected static String displayFormat;              /* used for knowing which display format user has chosen */
     public static DBHelper databaseHelper;              /* used making changes in history database, mainly adding data */
-    
-    
+
+
     /* 
         Function running at activity-app launch. We initialize our basic variables for settings, for history and 
         its database, our 3 TextViews and some other basic variables needed for calculations.
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         //Try Google play
         intent.setData(Uri.parse("market://details?id=com.tzegian.Calculator"));
         if (!MyStartActivity(intent)) {
-            //Market (Google play) app seems not installed, let's try to open a webbrowser
+            //Market (Google play) app seems not installed, let's try to open a web browser
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tzegian.Calculator"));
             if (!MyStartActivity(intent)) {
                 //Well if this also fails, we have run out of options, inform the user.
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value) {
         return edit.putLong(key, Double.doubleToRawLongBits(value));
     }
-    
+
     /*
         Custom method for getting a double from SharedPreferences.
     */
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             /*
-                If last char is square root or result, memory adding can not be proccessed.
+                If last char is square root or result, memory adding can not be processed.
                 If last char is an operation such as +,- etc. then we find the number before that operation.
                 Else if last char is a number, we find that full number.
                 We parse the numbers as double and save them like these.
@@ -506,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 return;
             }
-            
+
             if (number !=0)
             {
                 String opsText = ops.getText().toString();
@@ -542,7 +542,7 @@ public class MainActivity extends AppCompatActivity {
                     /* 
                         If there is a number on the screen
                     */
-                    if(!lastChar.equals(""))
+                    if(!lastChar.isEmpty())
                     {
                         int i;
                         
@@ -575,8 +575,8 @@ public class MainActivity extends AppCompatActivity {
                         opsText = opsFull.getText().toString();
                         opsText = opsText.substring(0,i+1);
                         opsFull.setText(opsText + Double.toString(number));
-                    } 
-                    else /* If screen is EMPTY just add this saved number */ 
+                    }
+                    else /* If screen is EMPTY just add this saved number */
                     {
                         ops.setText(opsText + Double.toString(number));
                         opsFull.setText(opsFull.getText().toString() + Double.toString(number));
@@ -649,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
         Otherwise based on the operation button that gets clicked, the appropriate function gets called for next steps.
         If the result button gets clicked then based on some conditions we make some actions, and we save the result and operations at history database.
         Otherwise if the button is a number, we just check the last char so it is not a % or = and then we print that number.
-    */    
+    */
     public void helperForOnClickChooseAction(String buttonText, String opsText, String lastChar, String opsTextFull) {
         if(lastChar.equals("-") && (
                 buttonText.equals(getString(R.string.percentage)) || buttonText.equals(getString(R.string.comma)) ||
@@ -896,11 +896,11 @@ public class MainActivity extends AppCompatActivity {
         Then we start checking the last number we have backwards, if we find at the last position a comma/dot, we delete it.
         If we find a sqrt, then nothing happens, we return.
         If we find a symbol/operation such as +,- etc we break there and continue for next actions.
-        Samme happens at the TextView that contains all the calculations till now.
+        Same happens at the TextView that contains all the calculations till now.
         Then we find the number (based on where we stopped before at the break), change it to opposite and if it is an integer,
         print it as an integer otherwise as a double.
         Also we make some changes at view, because if it is a large number or a double, we can handle it correctly 
-        only if decimal seperator is a dot and not a comma. Otherwise errors arise.
+        only if decimal separator is a dot and not a comma. Otherwise errors arise.
     */
     private void posNegTextChanger(String opsText, String lastChar, String opsTextFull) {
         double numberChanged;
@@ -969,7 +969,7 @@ public class MainActivity extends AppCompatActivity {
         dfFormat = dfFormat.replace(",", "");
         ops.setText(opsText + dfFormat);
     }
-    
+
     /*
         First we check if screen is empty, if it is, we just add the sqrt symbol and return
         If last char is a symbol/operation (+,-,÷,*), just add the sqrt symbol
@@ -1013,12 +1013,12 @@ public class MainActivity extends AppCompatActivity {
         Then we start checking the last number we have backwards
         If we find a sqrt, then nothing happens, we return.
         If we find a symbol/operation such as +,- etc we break there and continue for next actions.
-        Samme happens at the TextView that contains all the calculations till now.
+        Same happens at the TextView that contains all the calculations till now.
         Then we find the number (based on where we stopped before at the break), change it to x^2 (same as x*x) and if it is an integer,
         print it as an integer otherwise as a double.
         On TextView related with all calculations, print something like this 5^2 etc instead of 25 etc.
         Also we make some changes at view, because if it is a large number or a double, we can handle it correctly 
-        only if decimal seperator is a dot and not a comma. Otherwise errors arise.
+        only if decimal separator a dot and not a comma. Otherwise errors arise.
     */
     private void x2TextChanger(String opsText, String lastChar, String opsTextFull) {
         double numberChanged;
@@ -1186,7 +1186,7 @@ public class MainActivity extends AppCompatActivity {
         the "who is who" of the arguments-symbol change. These arguments are used to figure out at each time, if the last char is one of these symbols
         and if so if we should change that last char with the new one that got clicked or not.
         This process happens at the start of the function. If last char needs to be replaced, some variables change also in order for the calculation
-        process to continue with no errors and then we print the new symbol and return. An exlusion is made if last char was a comma, at this condition,
+        process to continue with no errors and then we print the new symbol and return. An exclusion is made if last char was a comma, at this condition,
         we follow the above process but also we find the result from based on the number before the comma and anything other there is by before.
         If last char/symbol is the same one as this symbol that got clicked, then nothing happens.
         If last char is a sqrt, that means we need a number after it and not a symbol, so we decrement a counter we use that we have incremented at the
@@ -1237,7 +1237,7 @@ public class MainActivity extends AppCompatActivity {
         
         At the end of all cases (except the first one that returns), print the result, current calculation 
         and full calculation (containing all calculations till now) in the right format and change some variables for moving one
-        (1 of those variables is "starting" variable setted to false meaning that we are no longer at the start of a calculation)
+        (1 of those variables is "starting" variable set to false meaning that we are no longer at the start of a calculation)
     */
     private void startingTextChanger(String opsText, String lastChar, String buttonText) {
         if(lastChar.equals("-") || lastChar.equals(getString(R.string.sqrt)))
@@ -1410,7 +1410,7 @@ public class MainActivity extends AppCompatActivity {
         
         Otherwise if that symbol is an add/subtract symbol, that means that the percentage we have IS related with the first operator and must
         be applied at it (for example 100+50%=150 but 100*50%=100*0.5=50) so we make the appropriate calculation. 
-        If we are into a starting point then we shouldfirst find the first operator and then apply the percentage at it.
+        If we are into a starting point then we should first find the first operator and then apply the percentage at it.
         We return i, which is the position of the operation symbol.
     */
     private int findPercentage(int i, int perPos, String opsText, int fix) {
@@ -1494,7 +1494,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Function responsible for printing the number mResult at id TextView at the right format based
-        on what is the preffered display format for the user and based if the number is an integer or a double.
+        on what is the preferred display format for the user and based if the number is an integer or a double.
     */
     private void printTextsRight(TextView id, double mResult) {
         DecimalFormat df = new DecimalFormat("#");
@@ -1510,8 +1510,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        Based on what is the preffered display format for the user, change the decimal format of the number,
-        its decimal and grouping seperators and return it
+        Based on what is the preferred display format for the user, change the decimal format of the number,
+        its decimal and grouping separators and return it
     */
     private DecimalFormat setDecimalFormat(DecimalFormat df) {
         DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
@@ -1542,9 +1542,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        Calculations between numbers can be done correctly only if there is no grouping seperator and decimal seperator is a dot.
-        Otherwise errors and bugs arise. So at this function depending on the user's preffered display format we call the appropriate
-        function to change that seperators to default as stated above in order to do the calculation correctly.
+        Calculations between numbers can be done correctly only if there is no grouping separator and decimal seperator is a dot.
+        Otherwise errors and bugs arise. So at this function depending on the user's preferred display format we call the appropriate
+        function to change that separators to default as stated above in order to do the calculation correctly.
     */
     private void fixTextsDotAndComma(String opsText) {
         if(sharedPref.contains(getString(R.string.dotComma)))
@@ -1567,7 +1567,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1.000,5
-        We replace the dot with an empty string "" and decimal seperator (comma) with a dot.
+        We replace the dot with an empty string "" and decimal separator (comma) with a dot.
     */
     private void fixTextsDotComma(String opsText) {
         if(opsText.contains(","))
@@ -1594,7 +1594,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1,000.5
-        We replace the comma with an empty string "", decimal seperator is already in correct format.
+        We replace the comma with an empty string "", decimal separator is already in correct format.
     */
     private void fixTextsCommaDot(String opsText) {
         if(opsText.contains("."))
@@ -1615,18 +1615,17 @@ public class MainActivity extends AppCompatActivity {
                 opsText = opsText.replace(",", "");
                 ops.setText(opsText);
             }
-                if(op1 >= 1000)
-                {
-                    opsText = opsText.replace(",", "");
-                    ops.setText(opsText);
-                }
+            if(op1 >= 1000)
+            {
+                opsText = opsText.replace(",", "");
+                ops.setText(opsText);
             }
         }
     }
 
     /*
         Example in which this function will run: 1 000,5
-        We replace the space with an empty string "" and decimal seperator, comma, with a dot.
+        We replace the space with an empty string "" and decimal separator, comma, with a dot.
     */
     private void fixTextSpaceComma(String opsText) {
         if(opsText.contains(","))
@@ -1653,7 +1652,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1 000.5
-        We replace the space with an empty string "", decimal seperator is already in correct format.
+        We replace the space with an empty string "", decimal separator is already in correct format.
     */
     private void fixTextsSpaceDot(String opsText) {
         if(opsText.contains("."))
@@ -1709,7 +1708,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    
+
     /*
         Describes the alert dialog used for showing the setting for different display formats, shows current format
         and if user wants to change saves the new format into SharedPreferences and uses that from such on.

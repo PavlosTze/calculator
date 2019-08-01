@@ -1,21 +1,20 @@
 /*
     Used for implementing different themes and how to change them and save them.
     Current theme is saved using SharedPreferences so user chooses a theme, we save it there
-    (so the user won't have to choose it everytime he launches the app).
+    (so the user won't have to choose it every time he launches the app).
     First we save the current SharedPreferences data as it contains some more data for vibration setting, how many days
     user has the app and how many times the app is used. Then we clear the SharedPreferences data, we save the new theme
-    the user wants to use and we save the other settings as mentionted above also.
+    the user wants to use and we save the other settings as mentioned above also.
 */
 
 package com.tzegian.Calculator;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-public class ChangeTheme extends AppCompatActivity {
+public class ChangeTheme extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

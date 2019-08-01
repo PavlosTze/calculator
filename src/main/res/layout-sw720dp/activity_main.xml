@@ -160,7 +160,7 @@
                             android:textSize="60sp" />
 
                         <Button
-                            android:id="@+id/divine"
+                            android:id="@+id/divide"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="2dp"
@@ -170,7 +170,7 @@
                             android:shadowDx="0"
                             android:shadowDy="0"
                             android:shadowRadius="7"
-                            android:text="@string/divine"
+                            android:text="@string/divide"
                             android:textColor="#000000"
                             android:textSize="60sp" />
 

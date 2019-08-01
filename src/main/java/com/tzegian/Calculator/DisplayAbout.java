@@ -5,10 +5,10 @@
 
 package com.tzegian.Calculator;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class DisplayAbout extends AppCompatActivity {
+public class DisplayAbout extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
