@@ -5,8 +5,9 @@
 
 package com.tzegian.Calculator;
 
-import android.app.Activity;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -18,14 +19,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class History extends Activity {
+public class History extends AppCompatActivity {
 
     private LinearLayout linearLayout;
     private ArrayList<String> historyList;
     private LayoutParams layoutParams;
 
     /*
-        Creates the content view, initializes historyList as an ArrayList
+        Creates the content view, initiliazes historyList as an ArrayList
         and gets a copy of the database in order to read the entries from it when the UI will be created.
     */
     @Override
