@@ -5,21 +5,21 @@
     <string name="rate">Rate this app!</string>
     <string name="about">About</string>
     <string name="aboutText">For any questions, suggestions or bugs please contact me on email: pavlostze@gmail.com\n\n
-        Don\'t forget to rate and comment on play store.\n Many thanks for using the app.\n App Version: 1.6 </string>
+        Don\'t forget to review on play store.\n App Version: 1.6.4 </string>
     <string name="divisionZero">Error: Division by zero.</string>
     <string name="cancel">Cancel</string>
     <string name="vibrate">Vibration</string>
     <string name="ClearHistory">Clear History</string>
     <string name="displayFormat">Display Format</string>
     <string name="selectDisplay">Select Display Format</string>
-    <string name="ratedialog">Rate Calculator!</string>
-    <string name="rateandreviewdialog">Yes. I want to rate Calculator!</string>
+    <string name="ratedialog">Rate Me!</string>
+    <string name="rateandreviewdialog">Yes. I want to rate you!</string>
     <string name="remindmelaterdialog">Remind me later.</string>
     <string name="nothanksdialog">No, thanks.</string>
-    <string name="textdialog">\nIf you like the Calculator, please leave a rate and a review. Thank you!\n</string>
+    <string name="textdialog">\nIf you like me, please leave a rating and a review. Thank you!\n</string>
 
-    <string name="firstLaunch" translatable="false">"Hello and thanks for using this app. This app does NOT have advertisement.\n\nIt has the option to take a survey (only 1 each day for each user) and this option is available when a small red rectangle indicator shows up at the top left of the screen.\n\nIf you want to help me and say a thank you please take a survey, it can be completed in 1 minute.\n\nThe red indicator can be closed if you do not want to see it or take a survey.\n\nThank you very much for your understanding and I hope you help me to keep working on this project."</string>
-    <string name="firstLaunchTitle" translatable="false">"First Launch."</string>
+    <string name="firstLaunch" translatable="false">"I do NOT have any ads. If you enjoy me, <b>please leave a review</b> for me in Google Play Store.\n"</string>
+    <string name="firstLaunchTitle" translatable="false">"Thanks for downloading me"</string>
     <string name="OK" translatable="false">"OK"</string>
     <string name="dotComma" translatable="false">"1.000,50"</string>
     <string name="commaDot" translatable="false">"1,000.50"</string>

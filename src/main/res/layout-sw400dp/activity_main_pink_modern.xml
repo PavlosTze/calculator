@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dark_modern"
@@ -155,7 +155,7 @@
                             android:textSize="40sp" />
 
                         <Button
-                            android:id="@+id/divine"
+                            android:id="@+id/divide"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="2dp"
@@ -165,7 +165,7 @@
                             android:shadowDx="0"
                             android:shadowDy="0"
                             android:shadowRadius="7"
-                            android:text="@string/divine"
+                            android:text="@string/divide"
                             android:textColor="#fb3feb"
                             android:textSize="40sp" />
 

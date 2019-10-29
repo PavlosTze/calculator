@@ -11,8 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,7 +29,7 @@ public class AppRater extends AppCompatActivity {
         Minimum 1 day and 4 launches for prompting the user.
     */
     private final static int DAYS_UNTIL_PROMPT = 1;
-    private final static int LAUNCHES_UNTIL_PROMPT = 4;
+    private final static int LAUNCHES_UNTIL_PROMPT = 2;
 
     /*
         This function is run on every main activity creation. If the prompt has already
@@ -123,7 +125,7 @@ public class AppRater extends AppCompatActivity {
                     intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tzegian.Calculator"));
                     if (!MyStartActivity(intent,mContext)) {
                         //Well if this also fails, we have run out of options, inform the user.
-                        Toast.makeText(mContext, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Could not open Google Play Store.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 MainActivity.editor.putBoolean("dontshowagain", true);

@@ -6,8 +6,9 @@
 package com.tzegian.Calculator;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,9 +41,18 @@ public class History extends AppCompatActivity {
 
         historyList = new ArrayList<>();
 
-        DBHelper.datab = MainActivity.databaseHelper.getReadableDatabase();
+        try {
+            DBHelper.datab = MainActivity.databaseHelper.getReadableDatabase();
+            updateUI();
+        } catch (Exception e) {
+            new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("An error has happened and history cannot be displayed. Please send an email to pavlostze@gmail.com to describe what happened.")
 
-        updateUI();
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNeutralButton(R.string.OK, null)
+                .show();
+        }
     }
 
     

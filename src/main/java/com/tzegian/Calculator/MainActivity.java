@@ -16,8 +16,8 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -923,6 +923,9 @@ public class MainActivity extends AppCompatActivity {
         for (i = opsText.length() - 1; i >= 0; i--) {
             if (opsText.charAt(opsText.length() - 1) == getString(R.string.comma).charAt(0)) {
                 deleteLastChar();
+                opsText = ops.getText().toString();
+                opsTextFull = opsFull.getText().toString();
+                continue;
             }
             if (opsText.charAt(i) == getString(R.string.add).charAt(0) ||
                     opsText.charAt(i) == getString(R.string.subtract).charAt(0) ||
@@ -1035,6 +1038,8 @@ public class MainActivity extends AppCompatActivity {
             if(lastChar.equals("."))
             {
                 deleteLastChar();
+                opsText = ops.getText().toString();
+                opsTextFull = opsFull.getText().toString();
             }
             for (i = opsText.length() - 1; i >= 0; i--) {
                 if (opsText.charAt(i) == getString(R.string.add).charAt(0) ||
@@ -1458,6 +1463,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
                 if (opsText.charAt(i) == getString(R.string.percentage).charAt(0)) {
+                    foundPerOp2 = true;
                     perPos = i;
                     break;
                 }
@@ -1615,11 +1621,10 @@ public class MainActivity extends AppCompatActivity {
                 opsText = opsText.replace(",", "");
                 ops.setText(opsText);
             }
-                if(op1 >= 1000)
-                {
-                    opsText = opsText.replace(",", "");
-                    ops.setText(opsText);
-                }
+            if(op1 >= 1000)
+            {
+                opsText = opsText.replace(",", "");
+                ops.setText(opsText);
             }
         }
     }

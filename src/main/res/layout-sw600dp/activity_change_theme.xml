@@ -22,7 +22,7 @@
         android:layout_marginTop="30dp"
         android:layout_row="0"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClick"
         android:src="@drawable/ic_greybluelarge"
         android:text="@string/activityMain" />
 
