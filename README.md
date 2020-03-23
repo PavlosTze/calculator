@@ -1,6 +1,6 @@
 # Calculator
-Calculator is an android app published on Google Play, of course, it is a Calculator app. It works as simple calculators which means
-that no order of calculations exists (so that multiply for example is ahead of addition etc).
+An android app published on Google Play. It works as a simple calculator which means
+that there is no order of operations (multiply for example is not executed before addition etc).
 
 ## Built With
 
@@ -12,7 +12,7 @@ This repo made for showing off my work/project. I am not seeking for contributor
 
 ## Authors
 
-* **Pavlos Tzegiannakis** - *Initial work* - (https://github.com/PavlosTze)
+* **Pavlos Tzegiannakis** - (https://github.com/PavlosTze)
 
 ## License
 
