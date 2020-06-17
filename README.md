@@ -14,9 +14,5 @@ This repo made for showing off my work/project. I am not seeking for contributor
 
 * **Pavlos Tzegiannakis** - (https://github.com/PavlosTze)
 
-## License
-
-This project has no license. 
-
 ## Google play Link
 https://play.google.com/store/apps/details?id=com.tzegian.Calculator
