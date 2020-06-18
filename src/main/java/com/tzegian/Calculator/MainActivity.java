@@ -791,6 +791,7 @@ public class MainActivity extends AppCompatActivity {
     */
     private void commaTextChanger(String opsText, String lastChar) {
         int commaNum = 0;
+        boolean startedWithComma = false;
 
         int length = opsText.length() - 1;
         if (length >= 0) {
@@ -803,27 +804,34 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         } else {
-            return;
+            startedWithComma = true;
         }
 
-        for (int i = opsText.length() - 1; i >= 0; i--) {
-            if (opsText.charAt(i) == getString(R.string.comma).charAt(0)) {
-                commaNum++;
-                break;
-            }
-            if (opsText.charAt(i) == getString(R.string.add).charAt(0) ||
-                    opsText.charAt(i) == getString(R.string.subtract).charAt(0) ||
-                    opsText.charAt(i) == getString(R.string.multiply).charAt(0) ||
-                    opsText.charAt(i) == getString(R.string.divide).charAt(0)) {
-                break;
-            }
-        }
-
-        if (commaNum == 0) {
-            operations = opsText + getString(R.string.comma);
-            operationsFull = opsFull.getText().toString() + getString(R.string.comma);
+        if(startedWithComma) {
+            operations = getString(R.string.zero) + getString(R.string.comma);
+            operationsFull = getString(R.string.zero) + getString(R.string.comma);
             ops.setText(operations);
             opsFull.setText(operationsFull);
+        } else {
+            for (int i = opsText.length() - 1; i >= 0; i--) {
+                if (opsText.charAt(i) == getString(R.string.comma).charAt(0)) {
+                    commaNum++;
+                    break;
+                }
+                if (opsText.charAt(i) == getString(R.string.add).charAt(0) ||
+                        opsText.charAt(i) == getString(R.string.subtract).charAt(0) ||
+                        opsText.charAt(i) == getString(R.string.multiply).charAt(0) ||
+                        opsText.charAt(i) == getString(R.string.divide).charAt(0)) {
+                    break;
+                }
+            }
+
+            if (commaNum == 0) {
+                operations = opsText + getString(R.string.comma);
+                operationsFull = opsFull.getText().toString() + getString(R.string.comma);
+                ops.setText(operations);
+                opsFull.setText(operationsFull);
+            }
         }
     }
 
