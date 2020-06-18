@@ -6,96 +6,87 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/GridLayout"
         android:columnCount="2"
         android:orientation="horizontal"
+        android:layout_margin="20dp"
         android:rowCount="3">
 
-    <ImageButton
-        android:id="@+id/themeGreyBlue"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_gravity="top|left"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_row="0"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_greybluelarge"
-        android:text="@string/activityMain" />
+        <ImageButton
+            android:id="@+id/themeGreyBlue"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginBottom="20dp"
+            android:layout_row="0"
+            android:background="#bca577"
+            android:onClick="onClickChangeTheme"
+            android:src="@drawable/ic_greybluelarge"
+            android:text="@string/activityMain" />
 
-    <ImageButton
-        android:id="@+id/themeGreyGreen"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_gravity="top|right"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_row="0"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_greygreenlarge"
-        android:text="@string/activityMainGreen" />
+        <ImageButton
+            android:id="@+id/themeGreyGreen"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="top|end"
+            android:layout_row="0"
+            android:background="#bca577"
+            android:onClick="@string/onClick"
+            android:src="@drawable/ic_greygreenlarge"
+            android:text="@string/activityMainGreen" />
 
-    <ImageButton
-        android:id="@+id/themeDarkModern"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_gravity="top|left"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_row="1"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_darkmodernlarge"
-        android:text="@string/activityMainDarkModern" />
+        <ImageButton
+            android:id="@+id/themeDarkModern"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="top|start"
+            android:layout_marginBottom="20dp"
+            android:layout_row="1"
+            android:background="#bca577"
+            android:onClick="@string/onClick"
+            android:src="@drawable/ic_darkmodernlarge"
+            android:text="@string/activityMainDarkModern" />
 
-    <ImageButton
-        android:id="@+id/themeLightModern"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_gravity="top|right"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_row="1"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_lightmodernlarge"
-        android:text="@string/activityMainLightModern" />
+        <ImageButton
+            android:id="@+id/themeLightModern"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="top|end"
+            android:layout_marginBottom="20dp"
+            android:layout_row="1"
+            android:background="#bca577"
+            android:onClick="@string/onClick"
+            android:src="@drawable/ic_lightmodernlarge"
+            android:text="@string/activityMainLightModern" />
 
-    <ImageButton
-        android:id="@+id/themeGreyPink"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_gravity="top|left"
-        android:layout_marginLeft="20dp"
-        android:layout_row="2"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_greypinklarge"
-        android:text="@string/activityMainPink" />
+        <ImageButton
+            android:id="@+id/themeGreyPink"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="top|start"
+            android:layout_row="2"
+            android:background="#bca577"
+            android:onClick="@string/onClick"
+            android:src="@drawable/ic_greypinklarge"
+            android:text="@string/activityMainPink" />
 
-    <ImageButton
-        android:id="@+id/themePinkModern"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_gravity="top|right"
-        android:layout_row="2"
-        android:background="#bca577"
-        android:onClick="@string/onClick"
-        android:src="@drawable/ic_yellowmodernlarge"
-        android:text="@string/activityMainPinkModern"
-        android:layout_marginRight="20dp" />
+        <ImageButton
+            android:id="@+id/themePinkModern"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="top|end"
+            android:layout_row="2"
+            android:background="#bca577"
+            android:onClick="@string/onClick"
+            android:src="@drawable/ic_yellowmodernlarge"
+            android:text="@string/activityMainPinkModern" />
 
-</GridLayout>
+    </GridLayout>
 
 </ScrollView>

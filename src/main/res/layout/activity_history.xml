@@ -20,7 +20,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
+                android:layout_gravity="center"
                 android:background="@drawable/button_del_selector"
                 android:onClick="clearHistory"
                 android:shadowColor="#000000"

@@ -75,7 +75,7 @@ public class History extends AppCompatActivity {
             textView1.setText(historyList.get(i));
             textView1.setLayoutParams(layoutParams);
             textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            layoutParams.gravity = Gravity.RIGHT;
+            layoutParams.gravity = Gravity.END;
             layoutParams.setMargins(10, 10, 10, 10); // (left, top, right, bottom)
             linearLayout.addView(textView1);
         }

@@ -14,7 +14,6 @@ import android.net.Uri;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -47,7 +46,7 @@ public class AppRater extends AppCompatActivity {
         MainActivity.editor.putLong("launch_count", launch_count);
 
         // Get date of first launch
-        Long date_firstLaunch = MainActivity.sharedPref.getLong("date_firstlaunch", 0);
+        long date_firstLaunch = MainActivity.sharedPref.getLong("date_firstlaunch", 0);
         if (date_firstLaunch == 0) {
             date_firstLaunch = System.currentTimeMillis();
             MainActivity.editor.putLong("date_firstlaunch", date_firstLaunch);
@@ -119,11 +118,11 @@ public class AppRater extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 //Try Google play
                 intent.setData(Uri.parse("market://details?id=com.tzegian.Calculator"));
-                if (!MyStartActivity(intent,mContext)) {
+                if (!rateActivity(intent,mContext)) {
 
                     //Market (Google play) app seems not installed, let's try to open a webbrowser
                     intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tzegian.Calculator"));
-                    if (!MyStartActivity(intent,mContext)) {
+                    if (!rateActivity(intent,mContext)) {
                         //Well if this also fails, we have run out of options, inform the user.
                         Toast.makeText(mContext, "Could not open Google Play Store.", Toast.LENGTH_SHORT).show();
                     }
@@ -174,7 +173,7 @@ public class AppRater extends AppCompatActivity {
     /*
         Used for starting the google play app for rating the app. Also catches the error when google play is not installed.
     */
-    private static boolean MyStartActivity(Intent a, final Context mContext) {
+    private static boolean rateActivity(Intent a, final Context mContext) {
         try {
             mContext.startActivity(a);
             return true;

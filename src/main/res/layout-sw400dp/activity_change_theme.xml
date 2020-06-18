@@ -8,8 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/GridLayout"
-        android:columnCount="3"
+        android:columnCount="2"
         android:orientation="horizontal"
+        android:layout_margin="10dp"
         android:rowCount="3">
 
     <ImageButton
@@ -17,13 +18,11 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="0"
-        android:layout_gravity="top|left"
+        android:layout_gravity="top|start"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
         android:layout_row="0"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_greyblue"
         android:text="@string/activityMain" />
 
@@ -32,13 +31,11 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="1"
-        android:layout_gravity="top"
+        android:layout_gravity="top|end"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
         android:layout_row="0"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_greygreen"
         android:text="@string/activityMainGreen" />
 
@@ -47,12 +44,10 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="0"
-        android:layout_gravity="top|left"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_gravity="top|start"
         android:layout_row="1"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_darkmodern"
         android:text="@string/activityMainDarkModern" />
 
@@ -61,12 +56,11 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="1"
-        android:layout_gravity="top"
+        android:layout_gravity="top|end"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
         android:layout_row="1"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_lightmodern"
         android:text="@string/activityMainLightModern" />
 
@@ -76,11 +70,10 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="0"
-        android:layout_gravity="top|left"
-        android:layout_marginLeft="20dp"
+        android:layout_gravity="top|start"
         android:layout_row="2"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_greypink"
         android:text="@string/activityMainPink" />
 
@@ -89,10 +82,10 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_column="1"
-        android:layout_gravity="top"
+        android:layout_gravity="top|end"
         android:layout_row="2"
         android:background="#bca577"
-        android:onClick="@string/onClick"
+        android:onClick="onClickChangeTheme"
         android:src="@drawable/ic_yellowmodern"
         android:text="@string/activityMainPinkModern" />
 

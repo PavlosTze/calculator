@@ -22,7 +22,7 @@ public class ChangeTheme extends AppCompatActivity {
         setContentView(R.layout.activity_change_theme);
     }
 
-    public void onClick(View view) {
+    public void onClickChangeTheme(View view) {
         ImageButton but = (ImageButton) view;
         int buttonText = but.getId();
         long launches = MainActivity.sharedPref.getLong("launch_count", 0);

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -73,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        vibrator = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         databaseHelper = new DBHelper(this);
         DBHelper.datab = databaseHelper.getWritableDatabase();
 
         history = new History();
 
-        sharedPref = this.getPreferences(this.MODE_PRIVATE);
+        sharedPref = this.getPreferences(MODE_PRIVATE);
 
         editor = sharedPref.edit();
 
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     /*
         Used for starting a new activity-app such as Google Play when the user wants to rate the app.
     */
-    private boolean MyStartActivity(Intent a) {
+    private boolean rateActivity(Intent a) {
         try {
             startActivity(a);
             return true;
@@ -256,10 +257,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //Try Google play
         intent.setData(Uri.parse("market://details?id=com.tzegian.Calculator"));
-        if (!MyStartActivity(intent)) {
+        if (!rateActivity(intent)) {
             //Market (Google play) app seems not installed, let's try to open a webbrowser
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tzegian.Calculator"));
-            if (!MyStartActivity(intent)) {
+            if (!rateActivity(intent)) {
                 //Well if this also fails, we have run out of options, inform the user.
                 Toast.makeText(this, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
             }
@@ -288,8 +289,8 @@ public class MainActivity extends AppCompatActivity {
     /*
         Custom method for putting a double at SharedPreferences.
     */
-    public static SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value) {
-        return edit.putLong(key, Double.doubleToRawLongBits(value));
+    public static void putDouble(final SharedPreferences.Editor editor, final String key, final double value) {
+        editor.putLong(key, Double.doubleToRawLongBits(value)).apply();
     }
     
     /*
@@ -315,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 Finds last char
             */
             if (ops.length() > 0) {
-                lastChar = opsText.substring(opsText.length() - 1, opsText.length());
+                lastChar = opsText.substring(opsText.length() - 1);
             }
             
             /*
@@ -365,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     fixTextsDotAndComma(opsText);
-                    number = Double.parseDouble(opsText.substring(i+1, opsText.length()));
+                    number = Double.parseDouble(opsText.substring(i+1));
                 } else
                 {
                     if(opsText.contains(getString(R.string.percentage)) ||
@@ -373,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         return;
                     }
-                    number = Double.parseDouble(opsText.substring(0, opsText.length()));
+                    number = Double.parseDouble(opsText);
                 }
 
             }
@@ -384,12 +385,10 @@ public class MainActivity extends AppCompatActivity {
             */
             if (!sharedPref.contains(getString(R.string.memory))) {
                 putDouble(editor,getString(R.string.memory),number);
-                editor.apply();
             } else {
                 numberFromMem = getDouble(sharedPref,getString(R.string.memory),0);
                 numberFromMem = numberFromMem + number;
                 putDouble(editor,getString(R.string.memory),numberFromMem);
-                editor.apply();
             }
         }
     }
@@ -409,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
                 Finds last char
             */
             if (ops.length() > 0) {
-                lastChar = opsText.substring(opsText.length() - 1, opsText.length());
+                lastChar = opsText.substring(opsText.length() - 1);
             }
             
             /*
@@ -458,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    number = Double.parseDouble(opsText.substring(i+1, opsText.length()));
+                    number = Double.parseDouble(opsText.substring(i+1));
                 } else
                 {
                     if(opsText.contains(getString(R.string.percentage)) ||
@@ -466,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         return;
                     }
-                    number = Double.parseDouble(opsText.substring(0, opsText.length()));
+                    number = Double.parseDouble(opsText);
                 }
 
             }
@@ -477,12 +476,10 @@ public class MainActivity extends AppCompatActivity {
             */
             if (!sharedPref.contains(getString(R.string.memory))) {
                 putDouble(editor,getString(R.string.memory),-number);
-                editor.apply();
             } else {
                 numberFromMem = getDouble(sharedPref,getString(R.string.memory),0);
                 numberFromMem = numberFromMem - number;
                 putDouble(editor,getString(R.string.memory),numberFromMem);
-                editor.apply();
             }
         }
     }
@@ -516,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
                     Finds the last char from current operation TextView 
                 */
                 if (ops.length() > 0) {
-                    lastChar = opsText.substring(opsText.length() - 1, opsText.length());
+                    lastChar = opsText.substring(opsText.length() - 1);
                 }
                 
                 /*
@@ -535,8 +532,10 @@ public class MainActivity extends AppCompatActivity {
                         lastChar.equals(getString(R.string.multiply)) ||
                         lastChar.equals(getString(R.string.divide)))
                 {
-                    ops.setText(opsText + Double.toString(number));
-                    opsFull.setText(opsFull.getText().toString() + Double.toString(number));
+                    operations = opsText + Double.toString(number);
+                    operationsFull = opsFull.getText().toString() + Double.toString(number);
+                    ops.setText(operations);
+                    opsFull.setText(operationsFull);
                 } else
                 {
                     /* 
@@ -557,8 +556,9 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             }
                         }
-                        opsText = opsText.substring(0,i+1);
-                        ops.setText(opsText + Double.toString(number));
+                        opsText = opsText.substring(0, i+1);
+                        operations = opsText + Double.toString(number);
+                        ops.setText(operations);
                         
                         /*
                             Fix TextView that contains all calculations that have been done till now.
@@ -574,12 +574,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                         opsText = opsFull.getText().toString();
                         opsText = opsText.substring(0,i+1);
-                        opsFull.setText(opsText + Double.toString(number));
+
+                        operationsFull = opsText + Double.toString(number);
+                        opsFull.setText(operationsFull);
                     } 
                     else /* If screen is EMPTY just add this saved number */ 
                     {
-                        ops.setText(opsText + Double.toString(number));
-                        opsFull.setText(opsFull.getText().toString() + Double.toString(number));
+                        operations = opsText + Double.toString(number);
+                        operationsFull = opsFull.getText().toString() + Double.toString(number);
+                        ops.setText(operations);
+                        opsFull.setText(operationsFull);
                     }
                 }
             }
@@ -595,9 +599,6 @@ public class MainActivity extends AppCompatActivity {
             if (sharedPref.contains(getString(R.string.memory))) {
                 editor.remove(getString(R.string.memory));
                 editor.apply();
-            } else
-            {
-                return;
             }
     }
 
@@ -621,7 +622,7 @@ public class MainActivity extends AppCompatActivity {
 
             String lastChar = "";
             if (ops.length() > 0) {
-                lastChar = opsText.substring(opsText.length() - 1, opsText.length());
+                lastChar = opsText.substring(opsText.length() - 1);
             }
 
             if (!opsText.contains(getString(R.string.result))) {
@@ -635,7 +636,7 @@ public class MainActivity extends AppCompatActivity {
                 opsTextFull = opsFull.getText().toString();
                 lastChar = "";
                 if (ops.length() > 0) {
-                    lastChar = opsText.substring(opsText.length() - 1, opsText.length());
+                    lastChar = opsText.substring(opsText.length() - 1);
                 }
                 helperForOnClickChooseAction(buttonText, opsText, lastChar, opsTextFull);
             }
@@ -686,30 +687,36 @@ public class MainActivity extends AppCompatActivity {
                 } else {                                      /* otherwise we have the result already so just */
                     printTextsRight(result, res);             /* print it */
                     deleteLastChar();                         /* and delete the last char so operations final string is not something like 5+5+ */
-                    ops.setText(ops.getText().toString() + buttonText); /* but 5+5= */
+                    operations = ops.getText().toString() + buttonText; /* but 5+5= */
+                    ops.setText(operations);
                 }
             } else                                                                              /* Calculation is in starting position */
             {
                 if(opsText.contains(getString(R.string.sqrt)) && opsText.length()>1)            /* If it is something like sqrt(4) just print the result in the right format */
                 {
-                    res = Math.sqrt(Double.parseDouble(opsText.substring(1,opsText.length())));
+                    res = Math.sqrt(Double.parseDouble(opsText.substring(1)));
                     printTextsRight(result, res);
-                    ops.setText(ops.getText().toString() + buttonText);
+                    operations = ops.getText().toString() + buttonText;
+                    ops.setText(operations);
                 } else                                                                          /* If it is something like 4 just print in result "4="*/
                 {
-                    ops.setText(ops.getText().toString() + buttonText);
+                    operations = ops.getText().toString() + buttonText;
+                    ops.setText(operations);
                     result.setText(ops.getText().toString());
                 }
             }
             String toBeSaved = opsFull.getText().toString() + " = " + result.getText().toString();      /* We get the full string of operations and result */
-            opsFull.setText(opsFull.getText().toString() + buttonText);                                 /* put a "=" at the end of the string with all operations */
+            operationsFull = opsFull.getText().toString() + buttonText;                                 /* put a "=" at the end of the string with all operations */
+            opsFull.setText(operationsFull);
             saveHistory(toBeSaved);                                                                     /* And save it at our history database */
         }
         else {                                      /* If button is a number just make a simple check and print it */
                 if (!lastChar.equals(getString(R.string.percentage)) && !buttonText.equals(getString(R.string.result))) {
                     checkAtResult = true;
-                    ops.setText(opsText + buttonText);
-                    opsFull.setText(opsTextFull + buttonText);
+                    operations = opsText + buttonText;
+                    operationsFull = opsTextFull + buttonText;
+                    ops.setText(operations);
+                    opsFull.setText(operationsFull);
                 }
         }
     }
@@ -813,8 +820,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (commaNum == 0) {
-            ops.setText(opsText + getString(R.string.comma));
-            opsFull.setText(opsFull.getText().toString() + getString(R.string.comma));
+            operations = opsText + getString(R.string.comma);
+            operationsFull = opsFull.getText().toString() + getString(R.string.comma);
+            ops.setText(operations);
+            opsFull.setText(operationsFull);
         }
     }
 
@@ -840,49 +849,26 @@ public class MainActivity extends AppCompatActivity {
         }
         switch (lastChar) {
             case "0":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "1":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "2":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "3":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "4":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "5":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "6":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "7":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "8":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
-                break;
             case "9":
-                ops.setText(opsText + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
+                operations = opsText + getString(R.string.percentage);
+                operationsFull = opsTextFull + getString(R.string.percentage);
+                ops.setText(operations);
+                opsFull.setText(operationsFull);
                 break;
             case ".":
                 deleteLastChar();
-                ops.setText(ops.getText().toString() + getString(R.string.percentage));
-                opsFull.setText(opsTextFull + getString(R.string.percentage));
+                operations = ops.getText().toString() + getString(R.string.percentage);
+                operationsFull = opsFull.getText().toString() + getString(R.string.percentage);
+                ops.setText(operations);
+                opsFull.setText(operationsFull);
                 break;
             default:
                 break;
@@ -951,26 +937,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        numberChanged = Double.parseDouble(opsText.substring(i + 1, opsText.length()));
+        numberChanged = Double.parseDouble(opsText.substring(i + 1));
         opsText = opsText.substring(0, i + 1);
         opsTextFull = opsTextFull.substring(0, j + 1);
         numberChanged = -numberChanged;
         if (numberChanged % 1 != 0) {
-            opsFull.setText(opsTextFull + Double.toString(numberChanged));
+            operationsFull = opsTextFull + Double.toString(numberChanged);
+            opsFull.setText(operationsFull);
         } else {
-            opsFull.setText(opsTextFull + Integer.toString((int) numberChanged));
+            operationsFull = opsTextFull + Integer.toString((int) numberChanged);
+            opsFull.setText(operationsFull);
         }
 
-        DecimalFormat df = new DecimalFormat("#");
-        df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
         symbols.setGroupingSeparator(',');
         symbols.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(symbols);
         df.setMaximumFractionDigits(8);
-        String dfFormat = df.format(numberChanged).toString();
+        String dfFormat = df.format(numberChanged);
         dfFormat = dfFormat.replace(",", "");
-        ops.setText(opsText + dfFormat);
+        operations = opsText + dfFormat;
+        ops.setText(operations);
     }
     
     /*
@@ -981,26 +969,21 @@ public class MainActivity extends AppCompatActivity {
     private void sqrtTextChanger(String opsText, String lastChar, String opsTextFull) {
         if(opsText.equals(getString(R.string.emptyString)))
         {
-            ops.setText(opsText + getString(R.string.sqrt));
-            opsFull.setText(opsTextFull + getString(R.string.sqrt));
+            operations = opsText + getString(R.string.sqrt);
+            operationsFull = opsTextFull + getString(R.string.sqrt);
+            ops.setText(operations);
+            opsFull.setText(operationsFull);
             return;
         }
         switch (lastChar) {
             case "+":
-                ops.setText(opsText + getString(R.string.sqrt));
-                opsFull.setText(opsTextFull + getString(R.string.sqrt));
-                break;
             case "−":
-                ops.setText(opsText + getString(R.string.sqrt));
-                opsFull.setText(opsTextFull + getString(R.string.sqrt));
-                break;
             case "÷":
-                ops.setText(opsText + getString(R.string.sqrt));
-                opsFull.setText(opsTextFull + getString(R.string.sqrt));
-                break;
             case "×":
-                ops.setText(opsText + getString(R.string.sqrt));
-                opsFull.setText(opsTextFull + getString(R.string.sqrt));
+                operations = opsText + getString(R.string.sqrt);
+                operationsFull = opsTextFull + getString(R.string.sqrt);
+                ops.setText(operations);
+                opsFull.setText(operationsFull);
                 break;
             default:
                 break;
@@ -1066,26 +1049,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            numberChanged = Double.parseDouble(opsText.substring(i + 1, opsText.length()));
+            numberChanged = Double.parseDouble(opsText.substring(i + 1));
             opsText = opsText.substring(0, i + 1);
             opsTextFull = opsTextFull.substring(0, j + 1);
             if (numberChanged % 1 != 0) {
-                opsFull.setText(opsTextFull + Double.toString(numberChanged) + "^2");
+                operationsFull = opsTextFull + Double.toString(numberChanged) + "^2";
+                opsFull.setText(operationsFull);
             } else {
-                opsFull.setText(opsTextFull + Integer.toString((int)numberChanged) + "^2");
+                operationsFull = opsTextFull + Integer.toString((int)numberChanged) + "^2";
+                opsFull.setText(operationsFull);
             }
             numberChanged = numberChanged*numberChanged;
 
-            DecimalFormat df = new DecimalFormat("#");
-            df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+            DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
             DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
             symbols.setGroupingSeparator(',');
             symbols.setDecimalSeparator('.');
             df.setDecimalFormatSymbols(symbols);
             df.setMaximumFractionDigits(8);
-            String dfFormat = df.format(numberChanged).toString();
+            String dfFormat = df.format(numberChanged);
             dfFormat = dfFormat.replace(",", "");
-            ops.setText(opsText + dfFormat);
+
+            operations = opsText + dfFormat;
+            ops.setText(operations);
         }
     }
 
@@ -1109,7 +1095,7 @@ public class MainActivity extends AppCompatActivity {
         /*
             Call of generic function
         */
-        addOpsTexts(opsText, lastChar, buttonText, getString(R.string.subtract),getString(R.string.multiply),
+        addOpsTexts(lastChar, buttonText, getString(R.string.subtract),getString(R.string.multiply),
                 getString(R.string.divide), getString(R.string.add));
     }
 
@@ -1133,7 +1119,7 @@ public class MainActivity extends AppCompatActivity {
         /*
             Call of generic function
         */
-        addOpsTexts(opsText, lastChar, buttonText, getString(R.string.add),getString(R.string.multiply),
+        addOpsTexts(lastChar, buttonText, getString(R.string.add),getString(R.string.multiply),
                 getString(R.string.divide), getString(R.string.subtract));
     }
 
@@ -1157,7 +1143,7 @@ public class MainActivity extends AppCompatActivity {
         /*
             Call of generic function
         */
-        addOpsTexts(opsText, lastChar, buttonText, getString(R.string.add),getString(R.string.subtract),
+        addOpsTexts(lastChar, buttonText, getString(R.string.add),getString(R.string.subtract),
                 getString(R.string.divide), getString(R.string.multiply));
     }
 
@@ -1181,7 +1167,7 @@ public class MainActivity extends AppCompatActivity {
         /*
             Call of generic function
         */
-        addOpsTexts(opsText, lastChar, buttonText, getString(R.string.add),getString(R.string.subtract),
+        addOpsTexts(lastChar, buttonText, getString(R.string.add),getString(R.string.subtract),
                 getString(R.string.multiply), getString(R.string.divide));
     }
 
@@ -1199,15 +1185,18 @@ public class MainActivity extends AppCompatActivity {
         In all other cases (for example when last char is a number), we print the symbol and move forward to calculation process in order to find the second
         operator and get a result.
     */
-    private void addOpsTexts(String opsText, String lastChar, String buttonText, String firstEqual,
+    private void addOpsTexts(String lastChar, String buttonText, String firstEqual,
                              String secondEqual, String thirdEqual, String elseIfEqual) {
         whenToLookForOp2++;
         if (lastChar.equals(firstEqual) || lastChar.equals(secondEqual) ||
                 lastChar.equals(thirdEqual) || lastChar.equals(getString(R.string.comma))) {
             deleteLastChar();
             whenToLookForOp2 = 1;
-            ops.setText(ops.getText().toString() + buttonText);
-            opsFull.setText(opsFull.getText().toString() + buttonText);
+
+            operations = ops.getText().toString() + buttonText;
+            operationsFull = opsFull.getText().toString() + buttonText;
+            ops.setText(operations);
+            opsFull.setText(operationsFull);
             if (lastChar.equals(getString(R.string.comma))) {
                 if (starting) {
                     whenToLookForOp2 = 1;
@@ -1216,16 +1205,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 findOp2(ops.getText().toString());
             }
-            return;
         } else if (lastChar.equals(elseIfEqual)) {
             return;
         } else if(lastChar.equals(getString(R.string.sqrt))) {
             whenToLookForOp2--;
-            return;
         } else
         {
-            ops.setText(ops.getText().toString() + buttonText);
-            opsFull.setText(opsFull.getText().toString() + buttonText);
+            operations = ops.getText().toString() + buttonText;
+            operationsFull = opsFull.getText().toString() + buttonText;
+            ops.setText(operations);
+            opsFull.setText(operationsFull);
             findOp2(ops.getText().toString());
         }
     }
@@ -1252,7 +1241,7 @@ public class MainActivity extends AppCompatActivity {
         if (opsText.contains(getString(R.string.percentage))) {
             op1 = Double.parseDouble(opsText.substring(0, opsText.length() - 1)) / 100;
         } else if(opsText.contains(getString(R.string.sqrt))) {
-            op1 = Math.sqrt(Double.parseDouble(opsText.substring(1, opsText.length())));
+            op1 = Math.sqrt(Double.parseDouble(opsText.substring(1)));
         } else {
             if (lastChar.equals(getString(R.string.comma)))
             {
@@ -1267,8 +1256,10 @@ public class MainActivity extends AppCompatActivity {
         printTextsRight(result, op1);
         printTextsRight(ops, op1);
 
-        ops.setText(ops.getText().toString() + buttonText);
-        opsFull.setText(opsFull.getText().toString() + buttonText);
+        operations = ops.getText().toString() + buttonText;
+        operationsFull = opsFull.getText().toString() + buttonText;
+        ops.setText(operations);
+        opsFull.setText(operationsFull);
         starting = false;
         whenToLookForOp2++;
     }
@@ -1322,13 +1313,13 @@ public class MainActivity extends AppCompatActivity {
             if (i != perPos) {
                 foundPerOp2 = false;
             } else {
-                i = findPercentage(i, perPos, opsText, 1);
+                i = findPercentage(perPos, opsText, 1);
             }
             checkAtResult = false;
             if (!foundPerOp2 && !foundSqrtOp2) {
                 op2 = Double.parseDouble(opsText.substring(i + 1, opsText.length() - 1));
             }
-            calculate(opsText.substring(i, i + 1), opsText.substring(opsText.length() - 1, opsText.length()));
+            calculate(opsText.substring(i, i + 1), opsText.substring(opsText.length() - 1));
             whenToLookForOp2 = 1;
         } else {
             op2 = 0;
@@ -1374,7 +1365,9 @@ public class MainActivity extends AppCompatActivity {
             printTextsRight(result, res);
         }
         printTextsRight(ops, res);
-        ops.setText(ops.getText().toString() + operationNext);
+
+        operations = ops.getText().toString() + operationNext;
+        ops.setText(operations);
         starting = false;
     }
 
@@ -1418,7 +1411,8 @@ public class MainActivity extends AppCompatActivity {
         If we are into a starting point then we shouldfirst find the first operator and then apply the percentage at it.
         We return i, which is the position of the operation symbol.
     */
-    private int findPercentage(int i, int perPos, String opsText, int fix) {
+    private int findPercentage(int perPos, String opsText, int fix) {
+        int i;
         for (i = perPos; i >= 0; i--) {
             if (opsText.charAt(i) == getString(R.string.add).charAt(0) ||
                     opsText.charAt(i) == getString(R.string.subtract).charAt(0) ||
@@ -1434,7 +1428,7 @@ public class MainActivity extends AppCompatActivity {
             if (starting) {
                 op1 = Double.parseDouble(opsText.substring(0, i));
             }
-                op2 = op1 * Double.parseDouble(opsText.substring(i + 1, opsText.length() - 1 - fix)) / 100;
+            op2 = op1 * Double.parseDouble(opsText.substring(i + 1, opsText.length() - 1 - fix)) / 100;
         }
         return i;
     }
@@ -1479,20 +1473,20 @@ public class MainActivity extends AppCompatActivity {
                 foundSqrtOp2 = false;
             } else
             {
-                op2 = Math.sqrt(Double.parseDouble(opsText.substring(i + 1, opsText.length())));
+                op2 = Math.sqrt(Double.parseDouble(opsText.substring(i + 1)));
                 i--;
             }
 
             if (i != perPos) {
                 foundPerOp2 = false;
             } else {
-                i = findPercentage(i, perPos, opsText, 0);
+                i = findPercentage(perPos, opsText, 0);
             }
 
             if (i < 0 && !foundPerOp2 && !foundSqrtOp2) {
                 op2 = Double.parseDouble(opsText.substring(i + 1, opsText.length() - 1));
             } else if (i < opsText.length() - 1 && !foundPerOp2 && !foundSqrtOp2) {
-                op2 = Double.parseDouble(opsText.substring(i + 1, opsText.length()));
+                op2 = Double.parseDouble(opsText.substring(i + 1));
             }
             calculate(opsText.substring(i, i + 1), "=");
         }
@@ -1503,14 +1497,12 @@ public class MainActivity extends AppCompatActivity {
         on what is the preffered display format for the user and based if the number is an integer or a double.
     */
     private void printTextsRight(TextView id, double mResult) {
-        DecimalFormat df = new DecimalFormat("#");
-        df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         if (mResult % 1 != 0) {
             mResult = (double) Math.round(mResult * 10000d) / 10000d;
-            df = setDecimalFormat(df);
+            DecimalFormat df = setDecimalFormat();
             id.setText(df.format(mResult));
         } else {
-            df = setDecimalFormat(df);
+            DecimalFormat df = setDecimalFormat();
             id.setText(df.format(mResult));
         }
     }
@@ -1519,7 +1511,8 @@ public class MainActivity extends AppCompatActivity {
         Based on what is the preffered display format for the user, change the decimal format of the number,
         its decimal and grouping seperators and return it
     */
-    private DecimalFormat setDecimalFormat(DecimalFormat df) {
+    private DecimalFormat setDecimalFormat() {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
         if(sharedPref.contains(getString(R.string.dotComma)))
         {
@@ -1723,10 +1716,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final int[] chosen = new int[1];
         int savedFormat = 0;
-        if(sharedPref.contains(getString(R.string.dotComma)))
-        {
-            savedFormat = 0;
-        } else if(sharedPref.contains(getString(R.string.commaDot)))
+        if(sharedPref.contains(getString(R.string.commaDot)))
         {
             savedFormat = 1;
         } else if(sharedPref.contains(getString(R.string.spaceComma)))
@@ -1786,12 +1776,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
-                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        return;
-                    }
-                });
+                }).setNegativeButton(getString(R.string.cancel), null);
 
         return builder.create();
     }

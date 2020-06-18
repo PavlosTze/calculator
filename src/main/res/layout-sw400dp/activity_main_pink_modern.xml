@@ -31,6 +31,7 @@
             android:layout_gravity="right"
             android:singleLine="true"
             android:text="@string/emptyString"
+            android:gravity="end"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="20sp" />
@@ -45,6 +46,7 @@
         android:layout_gravity="left|bottom|right|fill"
         android:layout_row="1"
         android:background="#f3e1f5"
+        android:gravity="end"
         android:textAlignment="textEnd">
 
         <TextView
@@ -54,6 +56,7 @@
             android:layout_gravity="right|bottom"
             android:singleLine="true"
             android:text="@string/emptyString"
+            android:gravity="end"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="35sp" />
@@ -68,6 +71,7 @@
         android:layout_gravity="left|bottom|right|fill"
         android:layout_row="2"
         android:background="#f3e1f5"
+        android:gravity="end"
         android:textAlignment="textEnd">
 
         <TextView
@@ -77,6 +81,7 @@
             android:layout_gravity="right|bottom"
             android:singleLine="true"
             android:text="@string/zero"
+            android:gravity="end"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="60sp" />
