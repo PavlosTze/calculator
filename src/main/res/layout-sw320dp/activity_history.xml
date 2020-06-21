@@ -9,28 +9,24 @@
         android:id="@+id/LinLayHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ece9c3"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TableRow
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/button_del_selector"
-                android:onClick="clearHistory"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="7"
-                android:text="@string/ClearHistory"
-                android:textColor="#FFFCFC"
-                android:textSize="15sp"
-                android:textStyle="italic" />
-        </TableRow>
+            android:layout_gravity="center"
+            android:background="@drawable/button_del_selector"
+            android:onClick="clearHistory"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="7"
+            android:text="@string/ClearHistory"
+            android:textColor="#FFFCFC"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:layout_margin="5dp"/>
     </LinearLayout>
 </ScrollView>

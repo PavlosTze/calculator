@@ -2,7 +2,7 @@
     The database used for implementing history's database. Some basic functions.
 */
 
-package com.tzegian.Calculator;
+package com.tzegian.Calculator.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     public static final String COLUMN_ID = "_ID";
     public static final String COLUMN_CONTENT = "content";
-    public static SQLiteDatabase datab;
+    public static SQLiteDatabase database;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // TODO Auto-generated method stub
         db.execSQL(CREATE_TABLE_HISTORY);
-        datab = db;
+        database = db;
     }
 
     /* 
@@ -54,6 +54,6 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_CONTENT, history);
-        datab.insert(TABLE, null, contentValues);
+        database.insert(TABLE, null, contentValues);
     }
 }

@@ -2,7 +2,7 @@
     <string name="app_name"><b>Calculator</b></string>
     <string name="change_theme">Change Theme</string>
     <string name="history">History</string>
-    <string name="rate">Rate this app!</string>
+    <string name="rate">Rate me</string>
     <string name="about">About</string>
     <string name="aboutText">For any questions, suggestions or bugs please contact me on email: pavlostze@gmail.com\n\n
         Don\'t forget to review on play store.\n App Version: 1.6.5 </string>
@@ -17,6 +17,21 @@
     <string name="remindmelaterdialog">Remind me later.</string>
     <string name="nothanksdialog">No, thanks.</string>
     <string name="textdialog">\nIf you like me, please leave a rating and a review. Thank you!\n</string>
+    <string name="donate" translatable="false">Donate</string>
+    <string name="donate_title_dialog" translatable="false">Make me happy!</string>
+    <string name="donate_yes_dialog"  translatable="false">Yes. I want to help!</string>
+    <string name="donation_description" translatable="false">
+        As you already know, this app has no ads or any other way of getting revenue.
+        I find ads annoying as much as you do so the only way to get some revenue is through donations.\n\nIf you appreciate my work and this app makes your life easier, feel free to make me happy by donating with one of the methods below.
+    </string>
+    <string name="donation_description_dialog" translatable="false">
+        This application has no ads.
+        I find them annoying as much as you do, that\'s why I do not use them.\n\n
+        If you appreciate it, you can check how you can help me by clicking the button below.
+    </string>
+    <string name="success_donation" translatable="false">Thank you for your donation. It is a great help.</string>
+    <string name="user_canceled_donation" translatable="false">Thank you for the consideration. If you changed your mind for a reason, contact me.</string>
+    <string name="error_donation" translatable="false">An error has occurred. Please try again or contact me if the problem persists.</string>
 
     <string name="firstLaunch" translatable="false">"I do NOT have any ads. If you enjoy me, <b>please leave a review</b> for me in Google Play Store.\n"</string>
     <string name="firstLaunchTitle" translatable="false">"Thanks for downloading me"</string>
@@ -67,6 +82,5 @@
     <string name="activityMainLightModern" translatable="false">activity_main_light_modern</string>
     <string name="activityMainPinkModern" translatable="false">activity_main_pink_modern</string>
     <string name="onClick" translatable="false">onClick</string>
-    <string name="emptyString" translatable="false"></string>
     <string name="onClickDel" translatable="false">onClickDel</string>
 </resources>

@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.google.gms:google-services:4.3.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,6 +15,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 allprojects {
     repositories {
@@ -34,8 +36,8 @@ android {
         applicationId "com.tzegian.Calculator"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 19
-        versionName "1.6.5"
+        versionCode 24
+        versionName "1.7.0"
     }
     buildTypes {
         release {
@@ -49,6 +51,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.1.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
     testImplementation 'junit:junit:4.12'
 }
 

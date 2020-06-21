@@ -15,7 +15,7 @@
     tools:context="com.tzegian.Calculator.MainActivity">
 
 
-    <com.tzegian.Calculator.CustomHorizontalScrollView
+    <com.tzegian.Calculator.helpers.CustomHorizontalScrollView
         android:id="@+id/horizontalScrollView2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -31,14 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:singleLine="true"
-            android:text="@string/emptyString"
             android:gravity="end"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="20sp" />
-    </com.tzegian.Calculator.CustomHorizontalScrollView>
+    </com.tzegian.Calculator.helpers.CustomHorizontalScrollView>
 
-    <com.tzegian.Calculator.CustomHorizontalScrollView
+    <com.tzegian.Calculator.helpers.CustomHorizontalScrollView
         android:id="@+id/horizontalScrollView3"
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -56,14 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:singleLine="true"
-            android:text="@string/emptyString"
             android:gravity="end"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="35sp" />
-    </com.tzegian.Calculator.CustomHorizontalScrollView>
+    </com.tzegian.Calculator.helpers.CustomHorizontalScrollView>
 
-    <com.tzegian.Calculator.CustomHorizontalScrollView
+    <com.tzegian.Calculator.helpers.CustomHorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -86,7 +84,7 @@
             android:textAlignment="textEnd"
             android:textIsSelectable="true"
             android:textSize="60sp" />
-    </com.tzegian.Calculator.CustomHorizontalScrollView>
+    </com.tzegian.Calculator.helpers.CustomHorizontalScrollView>
 
     <TableRow
         android:layout_width="match_parent"
@@ -394,7 +392,6 @@
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
             android:background="@drawable/button_numbers_main_female_selector"
-            android:clickable="true"
             android:onClick="@string/onClick"
             android:shadowColor="#FFFFFF"
             android:shadowDx="0"

@@ -26,6 +26,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.tzegian.Calculator.dialogs.AppRaterDialog;
+import com.tzegian.Calculator.dialogs.DonationPromptDialog;
+import com.tzegian.Calculator.helpers.DBHelper;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -35,6 +40,11 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static String DISPLAY_FORMAT = "display_format";
+    public static String CURRENT_THEME = "current_theme";
+    public static String VIBRATION_ENABLED = "vibration_enabled";
+    public static String SAVED_NUMBER_IN_MEMORY = "saved_number_in_memory";
 
     private TextView result;            /* the textview related to result. when result changes, this variable changes too */
     private TextView ops;               /* textview related with current operation */
@@ -53,18 +63,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkAtResult;      /* needed for making some extra actions when result button is clicked depending on some conditions if met or not */
     private boolean foundPerOp2 = false;    /* if second operator is a percentage */
     private boolean foundSqrtOp2 = false;   /* if second operator is a square root of a number */
-    private History history;            /* needed to implement history */
+    private HistoryActivity history;            /* needed to implement history */
 
     private String results;             /* string related to result. we use this variable to change the appropriate textview */
     private String operationsFull;      /* string related with all operations the user has made till now. we use this variable to change the appropriate textview */
     private String operations;          /* string related with current operation. we use this variable to change the appropriate textview */
 
-    protected static SharedPreferences sharedPref;      /* used for keeping settings, desired theme etc. saved at SharedPreferences */
-    protected static SharedPreferences.Editor editor;   /* editor used for changing the sharedPref variable */
-    protected static boolean isCheckedVibrator = true;  /* used for knowing whether user has vibration enabled or not */
-    protected static String displayFormat;              /* used for knowing which display format user has chosen */
+    public static SharedPreferences sharedPref;      /* used for keeping settings, desired theme etc. saved at SharedPreferences */
+    public static boolean isCheckedVibrator = true;  /* used for knowing whether user has vibration enabled or not */
+    public static String displayFormat;              /* used for knowing which display format user has chosen */
     public static DBHelper databaseHelper;              /* used making changes in history database, mainly adding data */
-    
+
+    public static FirebaseAnalytics mFirebaseAnalytics;
     
     /* 
         Function running at activity-app launch. We initialize our basic variables for settings, for history and 
@@ -74,58 +84,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         databaseHelper = new DBHelper(this);
-        DBHelper.datab = databaseHelper.getWritableDatabase();
+        DBHelper.database = databaseHelper.getWritableDatabase();
 
-        history = new History();
+        history = new HistoryActivity();
 
         sharedPref = this.getPreferences(MODE_PRIVATE);
-
-        editor = sharedPref.edit();
 
         /* 
             theme setting initialization 
         */
-        dialogThemeChanger();
+        setContentView(sharedPref.getInt(CURRENT_THEME, R.layout.activity_main));
 
         /* 
             displayFormat setting initialization 
         */
-        if (sharedPref.contains(getString(R.string.dotComma))) {
-            displayFormat = getString(R.string.dotComma);
-        } else if (sharedPref.contains(getString(R.string.commaDot))) {
-            displayFormat = getString(R.string.commaDot);
-        } else if (sharedPref.contains(getString(R.string.spaceDot))) {
-            displayFormat = getString(R.string.spaceDot);
-        } else if(sharedPref.contains(getString(R.string.spaceComma))){
-            displayFormat = getString(R.string.spaceComma);
-        } else
-        {
-            displayFormat = getString(R.string.dotComma);
-            editor.putInt(getString(R.string.dotComma), R.string.dotComma);
-            editor.apply();
-        }
+        displayFormat = sharedPref.getString(DISPLAY_FORMAT, getString(R.string.dotComma));
 
         /* 
             vibration setting initialization 
         */
-        if (!sharedPref.contains(getString(R.string.vibrate))) {
-            editor.putBoolean(getString(R.string.vibrate), true);
-            editor.apply();
-        } else {
-            isCheckedVibrator = sharedPref.getBoolean(getString(R.string.vibrate), true);
-        }
+        isCheckedVibrator = sharedPref.getBoolean(VIBRATION_ENABLED, true);
 
-        result = (TextView) findViewById(R.id.resultText);
-        opsFull = (TextView) findViewById(R.id.operationsFull);
-        ops = (TextView) findViewById(R.id.operationsRuntime);
+        result = findViewById(R.id.resultText);
+        opsFull = findViewById(R.id.operationsFull);
+        ops = findViewById(R.id.operationsRuntime);
         starting = true;
         error = false;
         checkAtResult = false;
 
-        AppRater.app_launched(this);
+        AppRaterDialog.app_launched(this);
+        DonationPromptDialog.app_launched(this);
 
         /*
             Screen orientation is by default at PORTRAIT.
@@ -167,36 +160,43 @@ public class MainActivity extends AppCompatActivity {
         operations = ops.getText().toString();
 
         sharedPref = this.getPreferences(MODE_PRIVATE);
-        editor = sharedPref.edit();
 
         final int id = item.getItemId();
+
+        Intent intent;
+        Bundle bundle = new Bundle();
 
         switch (id) {
             case R.id.themeChanger:
                 vibrate();
-                Intent intenttheme = new Intent(this, ChangeTheme.class);
-                startActivity(intenttheme);
+                intent = new Intent(this, ChangeThemeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.about:
                 vibrate();
-                Intent intent = new Intent(this, DisplayAbout.class);
+                intent = new Intent(this, DisplayAboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.donate:
+                mFirebaseAnalytics.logEvent("donateFromMenu" , bundle);
+                vibrate();
+                intent = new Intent(this, DonationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rate:
+                mFirebaseAnalytics.logEvent("rateFromMenu" , bundle);
                 vibrate();
-                btnRateAppOnClick(null);
+                btnRateAppOnClick();
                 break;
             case R.id.vibrator:
                 isCheckedVibrator = !item.isChecked();
                 item.setChecked(isCheckedVibrator);
-                editor.remove(getString(R.string.vibrate));
-                editor.putBoolean(getString(R.string.vibrate), isCheckedVibrator);
-                editor.apply();
+                sharedPref.edit().putBoolean(VIBRATION_ENABLED, isCheckedVibrator).apply();
                 break;
             case R.id.history:
                 vibrate();
-                Intent intent1 = new Intent(this, History.class);
-                startActivity(intent1);
+                intent = new Intent(this, HistoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.displayFormat:
                 vibrate();
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRestart() {
         super.onRestart();
-        dialogThemeChanger();
+        setContentView(sharedPref.getInt(CURRENT_THEME, R.layout.activity_main));
         saveTexts();
     }
 
@@ -253,12 +253,12 @@ public class MainActivity extends AppCompatActivity {
     /*
         Actions done when user clicks the rate button on the app.
     */
-    public void btnRateAppOnClick(View v) {
+    public void btnRateAppOnClick() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //Try Google play
         intent.setData(Uri.parse("market://details?id=com.tzegian.Calculator"));
         if (!rateActivity(intent)) {
-            //Market (Google play) app seems not installed, let's try to open a webbrowser
+            //Market (Google play) app seems not installed, let's try to open a web browser
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tzegian.Calculator"));
             if (!rateActivity(intent)) {
                 //Well if this also fails, we have run out of options, inform the user.
@@ -273,8 +273,8 @@ public class MainActivity extends AppCompatActivity {
     */
     public void clearTexts(View view) {
         vibrate();
-        ops.setText(R.string.emptyString);
-        opsFull.setText(R.string.emptyString);
+        ops.setText("");
+        opsFull.setText("");
         result.setText(R.string.zero);
         op1 = 0D;
         res = 0D;
@@ -289,15 +289,15 @@ public class MainActivity extends AppCompatActivity {
     /*
         Custom method for putting a double at SharedPreferences.
     */
-    public static void putDouble(final SharedPreferences.Editor editor, final String key, final double value) {
-        editor.putLong(key, Double.doubleToRawLongBits(value)).apply();
+    public static void putDouble(final String key, final double value) {
+        sharedPref.edit().putLong(key, Double.doubleToRawLongBits(value)).apply();
     }
     
     /*
         Custom method for getting a double from SharedPreferences.
     */
-    public static double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
-        return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    public static double getDouble(final String key, final double defaultValue) {
+        return Double.longBitsToDouble(sharedPref.getLong(key, Double.doubleToLongBits(defaultValue)));
     }
 
     /*
@@ -305,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
         Finds the last char at our calculation depending on what calculation has been typed.
     */
     public void memoryAdd(View view) {
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("memoryAdd" , bundle);
         if(!error)
         {
             double number;
@@ -383,12 +385,12 @@ public class MainActivity extends AppCompatActivity {
                 If memory is empty just add it. Else, retrieve the saved number, 
                 add in that the number we currently have and save that result back in the memory.
             */
-            if (!sharedPref.contains(getString(R.string.memory))) {
-                putDouble(editor,getString(R.string.memory),number);
+            if (!sharedPref.contains(SAVED_NUMBER_IN_MEMORY)) {
+                putDouble(SAVED_NUMBER_IN_MEMORY,number);
             } else {
-                numberFromMem = getDouble(sharedPref,getString(R.string.memory),0);
+                numberFromMem = getDouble(SAVED_NUMBER_IN_MEMORY,0);
                 numberFromMem = numberFromMem + number;
-                putDouble(editor,getString(R.string.memory),numberFromMem);
+                putDouble(SAVED_NUMBER_IN_MEMORY,numberFromMem);
             }
         }
     }
@@ -397,6 +399,8 @@ public class MainActivity extends AppCompatActivity {
         Describes the actions that should be done if the M- memory button get clicked.
     */
     public void memorySub(View view) {
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("memorySub" , bundle);
         if(!error)
         {
             double number;
@@ -420,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             /*
-                If last char is square root or result, memory adding can not be proccessed.
+                If last char is square root or result, memory adding can not be processed.
                 If last char is an operation such as +,- etc. then we find the number before that operation.
                 Else if last char is a number, we find that full number.
                 We parse the numbers as double and save them like these.
@@ -474,12 +478,12 @@ public class MainActivity extends AppCompatActivity {
                 If memory is empty just put the -number there (as we do 0-number). Else, retrieve the saved number, 
                 subtract from that the number we currently have and save that result back in the memory.
             */
-            if (!sharedPref.contains(getString(R.string.memory))) {
-                putDouble(editor,getString(R.string.memory),-number);
+            if (!sharedPref.contains(SAVED_NUMBER_IN_MEMORY)) {
+                putDouble(SAVED_NUMBER_IN_MEMORY,-number);
             } else {
-                numberFromMem = getDouble(sharedPref,getString(R.string.memory),0);
+                numberFromMem = getDouble(SAVED_NUMBER_IN_MEMORY,0);
                 numberFromMem = numberFromMem - number;
-                putDouble(editor,getString(R.string.memory),numberFromMem);
+                putDouble(SAVED_NUMBER_IN_MEMORY,numberFromMem);
             }
         }
     }
@@ -489,6 +493,9 @@ public class MainActivity extends AppCompatActivity {
         Reads from the memory and shows that saved number.
     */
     public void memoryRead(View view) {
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("memoryRead" , bundle);
+
         if(!error)
         {
             double number;
@@ -497,8 +504,8 @@ public class MainActivity extends AppCompatActivity {
             /*
                 If there is a saved number
             */
-            if (sharedPref.contains(getString(R.string.memory))) {
-                number = getDouble(sharedPref,getString(R.string.memory),0);
+            if (sharedPref.contains(SAVED_NUMBER_IN_MEMORY)) {
+                number = getDouble(SAVED_NUMBER_IN_MEMORY,0);
             } else
             {
                 return;
@@ -595,11 +602,10 @@ public class MainActivity extends AppCompatActivity {
         Clears the memory.
     */
     public void memoryClear(View view) {
-            vibrate();
-            if (sharedPref.contains(getString(R.string.memory))) {
-                editor.remove(getString(R.string.memory));
-                editor.apply();
-            }
+        vibrate();
+        if (sharedPref.contains(SAVED_NUMBER_IN_MEMORY)) {
+            sharedPref.edit().remove(SAVED_NUMBER_IN_MEMORY).apply();
+        }
     }
 
     /*
@@ -711,14 +717,19 @@ public class MainActivity extends AppCompatActivity {
             saveHistory(toBeSaved);                                                                     /* And save it at our history database */
         }
         else {                                      /* If button is a number just make a simple check and print it */
-                if (!lastChar.equals(getString(R.string.percentage)) && !buttonText.equals(getString(R.string.result))) {
-                    checkAtResult = true;
-                    operations = opsText + buttonText;
-                    operationsFull = opsTextFull + buttonText;
-                    ops.setText(operations);
-                    opsFull.setText(operationsFull);
-                }
+            if (!lastChar.equals(getString(R.string.percentage)) && !buttonText.equals(getString(R.string.result))) {
+                checkAtResult = true;
+                operations = opsText + buttonText;
+                operationsFull = opsTextFull + buttonText;
+                ops.setText(operations);
+                opsFull.setText(operationsFull);
+            }
         }
+    }
+
+    // Helper function to remove the last char of a string
+    private String removeLastChar(String text) {
+        return text.substring(0, text.length() -1);
     }
 
     /*  
@@ -737,14 +748,14 @@ public class MainActivity extends AppCompatActivity {
                 if (ops.length() > 0) {
                     deletion(opsText);
                     opsText = ops.getText().toString();
-                    ops.setText(opsText.substring(0, opsText.length() - 1));
+                    ops.setText(removeLastChar(opsText));
                 }
             }
 
             String opsTextFull = opsFull.getText().toString();
             if (!opsTextFull.contains(getString(R.string.result))) {
                 if (opsFull.length() > 0) {
-                    opsFull.setText(opsTextFull.substring(0, opsTextFull.length() - 1));
+                    opsFull.setText(removeLastChar(opsTextFull));
                 }
             }
 
@@ -791,25 +802,28 @@ public class MainActivity extends AppCompatActivity {
     */
     private void commaTextChanger(String opsText, String lastChar) {
         int commaNum = 0;
-        boolean startedWithComma = false;
+        boolean firstOpStartComma = false;
+        boolean secondOpStartComma = false;
 
         int length = opsText.length() - 1;
         if (length >= 0) {
-            if (lastChar.equals(getString(R.string.add)) ||
-                    lastChar.equals(getString(R.string.subtract)) ||
-                    lastChar.equals(getString(R.string.multiply)) ||
-                    lastChar.equals(getString(R.string.divide)) ||
-                    lastChar.equals(getString(R.string.percentage)) ||
-                    lastChar.equals(getString(R.string.sqrt))) {
-                return;
+            if (lastChar.equals(getString(R.string.add)) || lastChar.equals(getString(R.string.subtract)) ||
+            lastChar.equals(getString(R.string.multiply)) || lastChar.equals(getString(R.string.divide)) ||
+            lastChar.equals(getString(R.string.percentage)) || lastChar.equals(getString(R.string.sqrt))) {
+                secondOpStartComma = true;
             }
         } else {
-            startedWithComma = true;
+            firstOpStartComma = true;
         }
 
-        if(startedWithComma) {
+        if(firstOpStartComma) {
             operations = getString(R.string.zero) + getString(R.string.comma);
             operationsFull = getString(R.string.zero) + getString(R.string.comma);
+            ops.setText(operations);
+            opsFull.setText(operationsFull);
+        } else if(secondOpStartComma) {
+            operations = opsText + getString(R.string.zero) + getString(R.string.comma);
+            operationsFull = opsFull.getText().toString() + getString(R.string.zero) + getString(R.string.comma);
             ops.setText(operations);
             opsFull.setText(operationsFull);
         } else {
@@ -890,11 +904,11 @@ public class MainActivity extends AppCompatActivity {
         Then we start checking the last number we have backwards, if we find at the last position a comma/dot, we delete it.
         If we find a sqrt, then nothing happens, we return.
         If we find a symbol/operation such as +,- etc we break there and continue for next actions.
-        Samme happens at the TextView that contains all the calculations till now.
+        Same happens at the TextView that contains all the calculations till now.
         Then we find the number (based on where we stopped before at the break), change it to opposite and if it is an integer,
         print it as an integer otherwise as a double.
         Also we make some changes at view, because if it is a large number or a double, we can handle it correctly 
-        only if decimal seperator is a dot and not a comma. Otherwise errors arise.
+        only if decimal separator is a dot and not a comma. Otherwise errors arise.
     */
     private void posNegTextChanger(String opsText, String lastChar, String opsTextFull) {
         double numberChanged;
@@ -975,7 +989,7 @@ public class MainActivity extends AppCompatActivity {
         Otherwise nothing happens (for example if last symbol is a number)
     */
     private void sqrtTextChanger(String opsText, String lastChar, String opsTextFull) {
-        if(opsText.equals(getString(R.string.emptyString)))
+        if(opsText.isEmpty())
         {
             operations = opsText + getString(R.string.sqrt);
             operationsFull = opsTextFull + getString(R.string.sqrt);
@@ -1007,18 +1021,18 @@ public class MainActivity extends AppCompatActivity {
         Then we start checking the last number we have backwards
         If we find a sqrt, then nothing happens, we return.
         If we find a symbol/operation such as +,- etc we break there and continue for next actions.
-        Samme happens at the TextView that contains all the calculations till now.
+        Same happens at the TextView that contains all the calculations till now.
         Then we find the number (based on where we stopped before at the break), change it to x^2 (same as x*x) and if it is an integer,
         print it as an integer otherwise as a double.
         On TextView related with all calculations, print something like this 5^2 etc instead of 25 etc.
         Also we make some changes at view, because if it is a large number or a double, we can handle it correctly 
-        only if decimal seperator is a dot and not a comma. Otherwise errors arise.
+        only if decimal separator is a dot and not a comma. Otherwise errors arise.
     */
     private void x2TextChanger(String opsText, String lastChar, String opsTextFull) {
         double numberChanged;
         int i,j;
 
-        if(opsText.equals(getString(R.string.emptyString))) {
+        if(opsText.isEmpty()) {
             return;
         }
         if(lastChar.equals("1") || lastChar.equals("2") || lastChar.equals("3") ||
@@ -1185,7 +1199,7 @@ public class MainActivity extends AppCompatActivity {
         the "who is who" of the arguments-symbol change. These arguments are used to figure out at each time, if the last char is one of these symbols
         and if so if we should change that last char with the new one that got clicked or not.
         This process happens at the start of the function. If last char needs to be replaced, some variables change also in order for the calculation
-        process to continue with no errors and then we print the new symbol and return. An exlusion is made if last char was a comma, at this condition,
+        process to continue with no errors and then we print the new symbol and return. An exclusion is made if last char was a comma, at this condition,
         we follow the above process but also we find the result from based on the number before the comma and anything other there is by before.
         If last char/symbol is the same one as this symbol that got clicked, then nothing happens.
         If last char is a sqrt, that means we need a number after it and not a symbol, so we decrement a counter we use that we have incremented at the
@@ -1239,7 +1253,7 @@ public class MainActivity extends AppCompatActivity {
         
         At the end of all cases (except the first one that returns), print the result, current calculation 
         and full calculation (containing all calculations till now) in the right format and change some variables for moving one
-        (1 of those variables is "starting" variable setted to false meaning that we are no longer at the start of a calculation)
+        (1 of those variables is "starting" variable set to false meaning that we are no longer at the start of a calculation)
     */
     private void startingTextChanger(String opsText, String lastChar, String buttonText) {
         if(lastChar.equals("-") || lastChar.equals(getString(R.string.sqrt)))
@@ -1247,13 +1261,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (opsText.contains(getString(R.string.percentage))) {
-            op1 = Double.parseDouble(opsText.substring(0, opsText.length() - 1)) / 100;
+            op1 = Double.parseDouble(removeLastChar(opsText)) / 100;
         } else if(opsText.contains(getString(R.string.sqrt))) {
             op1 = Math.sqrt(Double.parseDouble(opsText.substring(1)));
         } else {
             if (lastChar.equals(getString(R.string.comma)))
             {
-                ops.setText(opsText.substring(0, opsText.length() - 1));
+                ops.setText(removeLastChar(opsText));
             }
             op1 = Double.parseDouble(opsText);
             if(!opsFull.getText().toString().contains("^"))
@@ -1416,7 +1430,7 @@ public class MainActivity extends AppCompatActivity {
         
         Otherwise if that symbol is an add/subtract symbol, that means that the percentage we have IS related with the first operator and must
         be applied at it (for example 100+50%=150 but 100*50%=100*0.5=50) so we make the appropriate calculation. 
-        If we are into a starting point then we shouldfirst find the first operator and then apply the percentage at it.
+        If we are into a starting point then we should first find the first operator and then apply the percentage at it.
         We return i, which is the position of the operation symbol.
     */
     private int findPercentage(int perPos, String opsText, int fix) {
@@ -1502,22 +1516,20 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Function responsible for printing the number mResult at id TextView at the right format based
-        on what is the preffered display format for the user and based if the number is an integer or a double.
+        on what is the preferred display format for the user and based if the number is an integer or a double.
     */
     private void printTextsRight(TextView id, double mResult) {
         if (mResult % 1 != 0) {
             mResult = (double) Math.round(mResult * 10000d) / 10000d;
-            DecimalFormat df = setDecimalFormat();
-            id.setText(df.format(mResult));
-        } else {
-            DecimalFormat df = setDecimalFormat();
-            id.setText(df.format(mResult));
         }
+
+        DecimalFormat df = setDecimalFormat();
+        id.setText(df.format(mResult));
     }
 
     /*
-        Based on what is the preffered display format for the user, change the decimal format of the number,
-        its decimal and grouping seperators and return it
+        Based on what is the preferred display format for the user, change the decimal format of the number,
+        its decimal and grouping separators and return it
     */
     private DecimalFormat setDecimalFormat() {
         DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
@@ -1549,9 +1561,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        Calculations between numbers can be done correctly only if there is no grouping seperator and decimal seperator is a dot.
-        Otherwise errors and bugs arise. So at this function depending on the user's preffered display format we call the appropriate
-        function to change that seperators to default as stated above in order to do the calculation correctly.
+        Calculations between numbers can be done correctly only if there is no grouping separator and decimal separator is a dot.
+        Otherwise errors and bugs arise. So at this function depending on the user's preferred display format we call the appropriate
+        function to change that separators to default as stated above in order to do the calculation correctly.
     */
     private void fixTextsDotAndComma(String opsText) {
         if(sharedPref.contains(getString(R.string.dotComma)))
@@ -1574,7 +1586,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1.000,5
-        We replace the dot with an empty string "" and decimal seperator (comma) with a dot.
+        We replace the dot with an empty string "" and decimal separator (comma) with a dot.
     */
     private void fixTextsDotComma(String opsText) {
         if(opsText.contains(","))
@@ -1601,7 +1613,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1,000.5
-        We replace the comma with an empty string "", decimal seperator is already in correct format.
+        We replace the comma with an empty string "", decimal separator is already in correct format.
     */
     private void fixTextsCommaDot(String opsText) {
         if(opsText.contains("."))
@@ -1632,7 +1644,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1 000,5
-        We replace the space with an empty string "" and decimal seperator, comma, with a dot.
+        We replace the space with an empty string "" and decimal separator, comma, with a dot.
     */
     private void fixTextSpaceComma(String opsText) {
         if(opsText.contains(","))
@@ -1659,7 +1671,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Example in which this function will run: 1 000.5
-        We replace the space with an empty string "", decimal seperator is already in correct format.
+        We replace the space with an empty string "", decimal separator is already in correct format.
     */
     private void fixTextsSpaceDot(String opsText) {
         if(opsText.contains("."))
@@ -1690,47 +1702,25 @@ public class MainActivity extends AppCompatActivity {
         if (isCheckedVibrator)
             this.vibrator.vibrate(30);
     }
-
-    /*
-        Sets the app's theme the user has chosen to use.
-    */
-    private void dialogThemeChanger() {
-        if (sharedPref.contains(getString(R.string.activityMain))) {
-            setContentView(R.layout.activity_main);
-        } else if (sharedPref.contains(getString(R.string.activityMainDarkModern))) {
-            setContentView(R.layout.activity_main_dark_modern);
-        } else if (sharedPref.contains(getString(R.string.activityMainLightModern))) {
-            setContentView(R.layout.activity_main_light_modern);
-        } else if(sharedPref.contains(getString(R.string.activityMainGreen))){
-            setContentView(R.layout.activity_main_green);
-        } else if(sharedPref.contains(getString(R.string.activityMainPink))){
-            setContentView(R.layout.activity_main_pink);
-        } else if(sharedPref.contains(getString(R.string.activityMainPinkModern))){
-            setContentView(R.layout.activity_main_pink_modern);
-        } else
-        {
-            setContentView(R.layout.activity_main);
-            editor.putInt(getString(R.string.activityMain), R.layout.activity_main);
-            editor.apply();
-        }
-    }
-
     
     /*
         Describes the alert dialog used for showing the setting for different display formats, shows current format
         and if user wants to change saves the new format into SharedPreferences and uses that from such on.
     */
     private Dialog onCreateDialogSingleChoice() {
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("displayFormat" , bundle);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final int[] chosen = new int[1];
         int savedFormat = 0;
-        if(sharedPref.contains(getString(R.string.commaDot)))
+        if(displayFormat.equals(getString(R.string.commaDot)))
         {
             savedFormat = 1;
-        } else if(sharedPref.contains(getString(R.string.spaceComma)))
+        } else if(displayFormat.equals(getString(R.string.spaceComma)))
         {
             savedFormat = 2;
-        } else if(sharedPref.contains(getString(R.string.spaceDot)))
+        } else if(displayFormat.equals(getString(R.string.spaceDot)))
         {
             savedFormat = 3;
         }
@@ -1745,39 +1735,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         switch (chosen[0]) {
                             case 0:
-                                editor.remove(getString(R.string.commaDot));
-                                editor.remove(getString(R.string.spaceComma));
-                                editor.remove(getString(R.string.spaceDot));
-                                editor.apply();
-                                editor.putInt(getString(R.string.dotComma), R.string.dotComma);
-                                editor.apply();
+                                sharedPref.edit().putString(DISPLAY_FORMAT, getString(R.string.dotComma)).apply();
                                 displayFormat = getString(R.string.dotComma);
                                 break;
                             case 1:
-                                editor.remove(getString(R.string.dotComma));
-                                editor.remove(getString(R.string.spaceComma));
-                                editor.remove(getString(R.string.spaceDot));
-                                editor.apply();
-                                editor.putInt(getString(R.string.commaDot), R.string.commaDot);
-                                editor.apply();
+                                sharedPref.edit().putString(DISPLAY_FORMAT, getString(R.string.commaDot)).apply();
                                 displayFormat = getString(R.string.commaDot);
                                 break;
                             case 2:
-                                editor.remove(getString(R.string.commaDot));
-                                editor.remove(getString(R.string.dotComma));
-                                editor.remove(getString(R.string.spaceDot));
-                                editor.apply();
-                                editor.putInt(getString(R.string.spaceComma), R.string.spaceComma);
-                                editor.apply();
+                                sharedPref.edit().putString(DISPLAY_FORMAT, getString(R.string.spaceComma)).apply();
                                 displayFormat = getString(R.string.spaceComma);
                                 break;
                             case 3:
-                                editor.remove(getString(R.string.commaDot));
-                                editor.remove(getString(R.string.spaceComma));
-                                editor.remove(getString(R.string.dotComma));
-                                editor.apply();
-                                editor.putInt(getString(R.string.spaceDot), R.string.spaceDot);
-                                editor.apply();
+                                sharedPref.edit().putString(DISPLAY_FORMAT, getString(R.string.spaceDot)).apply();
                                 displayFormat = getString(R.string.spaceDot);
                                 break;
                             default:
@@ -1795,9 +1765,9 @@ public class MainActivity extends AppCompatActivity {
         having to type it again.
     */
     private void saveTexts() {
-        result = (TextView) findViewById(R.id.resultText);
-        ops = (TextView) findViewById(R.id.operationsRuntime);
-        opsFull = (TextView) findViewById(R.id.operationsFull);
+        result = findViewById(R.id.resultText);
+        ops = findViewById(R.id.operationsRuntime);
+        opsFull = findViewById(R.id.operationsFull);
 
         opsFull.setText(operationsFull);
         result.setText(results);

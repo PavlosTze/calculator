@@ -3,7 +3,7 @@
 */
 
 
-package com.tzegian.Calculator;
+package com.tzegian.Calculator.helpers;
 
 import android.content.Context;
 import android.util.AttributeSet;

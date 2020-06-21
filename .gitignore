@@ -1,4 +1,6 @@
 /build
+/release
+.idea/
 *.bin
 *.lock
 local.properties
@@ -18,8 +20,4 @@ calculator.iml
 .gradle/vcs-1/gc.properties
 .gradle/buildOutputCleanup/cache.properties
 .gradle/5.1.1/gc.properties
-local.properties
-calculator.iml
-local.properties
-calculator.iml
 *.iml

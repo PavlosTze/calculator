@@ -17,16 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.tzegian.Calculator.helpers.DBHelper;
+
 import java.util.ArrayList;
 
-public class History extends AppCompatActivity {
+import static com.tzegian.Calculator.MainActivity.mFirebaseAnalytics;
+
+public class HistoryActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
     private ArrayList<String> historyList;
     private LayoutParams layoutParams;
 
     /*
-        Creates the content view, initiliazes historyList as an ArrayList
+        Creates the content view, initializes historyList as an ArrayList
         and gets a copy of the database in order to read the entries from it when the UI will be created.
     */
     @Override
@@ -34,7 +38,10 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        linearLayout = (LinearLayout) findViewById(R.id.LinLayHistory);
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("history" , bundle);
+
+        linearLayout = findViewById(R.id.LinLayHistory);
 
         layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
@@ -42,7 +49,7 @@ public class History extends AppCompatActivity {
         historyList = new ArrayList<>();
 
         try {
-            DBHelper.datab = MainActivity.databaseHelper.getReadableDatabase();
+            DBHelper.database = MainActivity.databaseHelper.getReadableDatabase();
             updateUI();
         } catch (Exception e) {
             new AlertDialog.Builder(this)
@@ -60,7 +67,7 @@ public class History extends AppCompatActivity {
         Responsible for updating history UI, reading from the database the entries and showing them.
     */
     private void updateUI() {
-        Cursor cursor = DBHelper.datab.query(DBHelper.TABLE,
+        Cursor cursor = DBHelper.database.query(DBHelper.TABLE,
                 new String[]{DBHelper.COLUMN_ID, DBHelper.COLUMN_CONTENT},
                 null, null, null, null, null);
         while (cursor.moveToNext()) {
@@ -76,7 +83,7 @@ public class History extends AppCompatActivity {
             textView1.setLayoutParams(layoutParams);
             textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             layoutParams.gravity = Gravity.END;
-            layoutParams.setMargins(10, 10, 10, 10); // (left, top, right, bottom)
+            layoutParams.setMargins(20, 20, 20, 20); // (left, top, right, bottom)
             linearLayout.addView(textView1);
         }
 
@@ -88,8 +95,8 @@ public class History extends AppCompatActivity {
     */
     public void clearHistory(View view)
     {
-        DBHelper.datab.execSQL("DELETE FROM "+ DBHelper.TABLE);
-        DBHelper.datab.execSQL("vacuum");
+        DBHelper.database.execSQL("DELETE FROM "+ DBHelper.TABLE);
+        DBHelper.database.execSQL("vacuum");
         finish();
     }
 

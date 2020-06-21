@@ -6,7 +6,7 @@
     android:background="#73a39e66"
     android:focusable="false"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context="com.tzegian.Calculator.DisplayAbout">
+    tools:context="com.tzegian.Calculator.DisplayAboutActivity">
 
     <TextView
         android:layout_width="match_parent"
