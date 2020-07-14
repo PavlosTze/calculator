@@ -21,10 +21,10 @@ import static com.tzegian.Calculator.MainActivity.sharedPref;
 public class DonationPromptDialog {
 
     /* 
-        Minimum 10 days and 15 launches for prompting the user.
+        Minimum 7 days and 10 launches for prompting the user.
     */
-    private final static int DAYS_UNTIL_PROMPT_DONATION = 1;
-    private final static int LAUNCHES_UNTIL_PROMPT_DONATION = 1;
+    private final static int DAYS_UNTIL_PROMPT_DONATION = 7;
+    private final static int LAUNCHES_UNTIL_PROMPT_DONATION = 10;
 
     /*
         This function is run on every main activity creation. If the prompt has already

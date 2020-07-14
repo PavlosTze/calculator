@@ -1534,19 +1534,19 @@ public class MainActivity extends AppCompatActivity {
     private DecimalFormat setDecimalFormat() {
         DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
-        if(sharedPref.contains(getString(R.string.dotComma)))
+        if(displayFormat.equals(getString(R.string.dotComma)))
         {
             symbols.setGroupingSeparator('.');
             symbols.setDecimalSeparator(',');
-        } else if(sharedPref.contains(getString(R.string.commaDot)))
+        } else if(displayFormat.equals(getString(R.string.commaDot)))
         {
             symbols.setGroupingSeparator(',');
             symbols.setDecimalSeparator('.');
-        } else if(sharedPref.contains(getString(R.string.spaceComma)))
+        } else if(displayFormat.equals(getString(R.string.spaceComma)))
         {
             symbols.setGroupingSeparator(' ');
             symbols.setDecimalSeparator(',');
-        } else if(sharedPref.contains(getString(R.string.spaceDot)))
+        } else if(displayFormat.equals(getString(R.string.spaceDot)))
         {
             symbols.setGroupingSeparator(' ');
             symbols.setDecimalSeparator('.');
@@ -1566,16 +1566,16 @@ public class MainActivity extends AppCompatActivity {
         function to change that separators to default as stated above in order to do the calculation correctly.
     */
     private void fixTextsDotAndComma(String opsText) {
-        if(sharedPref.contains(getString(R.string.dotComma)))
+        if(displayFormat.equals(getString(R.string.dotComma)))
         {
             fixTextsDotComma(opsText);
-        } else if(sharedPref.contains(getString(R.string.commaDot)))
+        } else if(displayFormat.equals(getString(R.string.commaDot)))
         {
             fixTextsCommaDot(opsText);
-        } else if(sharedPref.contains(getString(R.string.spaceComma)))
+        } else if(displayFormat.equals(getString(R.string.spaceComma)))
         {
             fixTextSpaceComma(opsText);
-        } else if(sharedPref.contains(getString(R.string.spaceDot)))
+        } else if(displayFormat.equals(getString(R.string.spaceDot)))
         {
             fixTextsSpaceDot(opsText);
         } else
@@ -1713,6 +1713,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final int[] chosen = new int[1];
+
         int savedFormat = 0;
         if(displayFormat.equals(getString(R.string.commaDot)))
         {
@@ -1724,6 +1725,8 @@ public class MainActivity extends AppCompatActivity {
         {
             savedFormat = 3;
         }
+
+        chosen[0] = savedFormat;
         CharSequence[] array = {getString(R.string.dotComma),getString(R.string.commaDot),getString(R.string.spaceComma),getString(R.string.spaceDot)};
         builder.setTitle(getString(R.string.selectDisplay)).setSingleChoiceItems(array, savedFormat, new DialogInterface.OnClickListener() {
                     @Override
