@@ -104,7 +104,9 @@ public class DonationActivity extends AppCompatActivity {
         });
 
         Bundle bundle = new Bundle();
-        mFirebaseAnalytics.logEvent("donationView" , bundle);
+        if(mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.logEvent("donationView" , bundle);
+        }
     }
 
     @Override

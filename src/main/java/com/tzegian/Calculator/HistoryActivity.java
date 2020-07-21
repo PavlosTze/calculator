@@ -39,7 +39,9 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         Bundle bundle = new Bundle();
-        mFirebaseAnalytics.logEvent("history" , bundle);
+        if(mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.logEvent("history" , bundle);
+        }
 
         linearLayout = findViewById(R.id.LinLayHistory);
 
