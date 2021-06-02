@@ -1,5 +1,5 @@
 # Calculator
-An android app published on Google Play. It works as a simple calculator which means
+An android application published on Google Play. It works as a simple calculator which means
 that there is no order of operations (multiply for example is not executed before addition etc).
 
 ## Built With
@@ -8,7 +8,7 @@ that there is no order of operations (multiply for example is not executed befor
 
 ## Contributing
 
-This repo made for showing off my work/project. I am not seeking for contributors right now. Thank you!
+This repo was made for showing off my work/project.
 
 ## Authors
 
