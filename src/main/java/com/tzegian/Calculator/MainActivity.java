@@ -658,72 +658,76 @@ public class MainActivity extends AppCompatActivity {
         Otherwise if the button is a number, we just check the last char so it is not a % or = and then we print that number.
     */    
     public void helperForOnClickChooseAction(String buttonText, String opsText, String lastChar, String opsTextFull) {
-        if(lastChar.equals("-") && (
-                buttonText.equals(getString(R.string.percentage)) || buttonText.equals(getString(R.string.comma)) ||
-                buttonText.equals(getString(R.string.posNeg)) || buttonText.equals(getString(R.string.add)) ||
-                buttonText.equals(getString(R.string.divide)) || buttonText.equals(getString(R.string.subtract)) ||
-                buttonText.equals(getString(R.string.multiply)) || buttonText.equals(getString(R.string.sqrt)) ||
-                buttonText.equals(getString(R.string.x2)) || buttonText.equals(getString(R.string.result))))
-        {
-            return;
-        }
-
-        if (buttonText.equals(getString(R.string.percentage))) {
-            percentageTextChanger(opsText, lastChar, opsTextFull);
-        } else if (buttonText.equals(getString(R.string.comma))) {
-            commaTextChanger(opsText, lastChar);
-        } else if (buttonText.equals(getString(R.string.posNeg))) {
-            posNegTextChanger(opsText, lastChar, opsTextFull);
-        } else if (buttonText.equals(getString(R.string.add))) {
-            addTextChanger(opsText, lastChar, buttonText);
-        } else if (buttonText.equals(getString(R.string.divide))) {
-            divTextChanger(opsText, lastChar, buttonText);
-        } else if (buttonText.equals(getString(R.string.subtract))) {
-            subTextChanger(opsText, lastChar, buttonText);
-        } else if (buttonText.equals(getString(R.string.multiply))) {
-            mulTextChanger(opsText, lastChar, buttonText);
-        } else if (buttonText.equals(getString(R.string.sqrt))) {
-            sqrtTextChanger(opsText, lastChar, opsTextFull);
-        } else if (buttonText.equals(getString(R.string.x2))) {
-            x2TextChanger(opsText, lastChar, opsTextFull);
-        } else if (buttonText.equals(getString(R.string.result)) && opsText.length() > 0) {     /* For result button */
-            if(!starting) {                                                                     /* If calculation is not in starting position */
-                if (checkAtResult) {                          /* If needed to make some additional actions to find the result before printing it */
-                    resultFix_NotOpBefore(opsText);           /* call the appropriate function */
-                } else {                                      /* otherwise we have the result already so just */
-                    printTextsRight(result, res);             /* print it */
-                    deleteLastChar();                         /* and delete the last char so operations final string is not something like 5+5+ */
-                    operations = ops.getText().toString() + buttonText; /* but 5+5= */
-                    ops.setText(operations);
-                }
-            } else                                                                              /* Calculation is in starting position */
+        try {
+            if(lastChar.equals("-") && (
+            buttonText.equals(getString(R.string.percentage)) || buttonText.equals(getString(R.string.comma)) ||
+            buttonText.equals(getString(R.string.posNeg)) || buttonText.equals(getString(R.string.add)) ||
+            buttonText.equals(getString(R.string.divide)) || buttonText.equals(getString(R.string.subtract)) ||
+            buttonText.equals(getString(R.string.multiply)) || buttonText.equals(getString(R.string.sqrt)) ||
+            buttonText.equals(getString(R.string.x2)) || buttonText.equals(getString(R.string.result))))
             {
-                if(opsText.contains(getString(R.string.sqrt)) && opsText.length()>1)            /* If it is something like sqrt(4) just print the result in the right format */
+                return;
+            }
+
+            if (buttonText.equals(getString(R.string.percentage))) {
+                percentageTextChanger(opsText, lastChar, opsTextFull);
+            } else if (buttonText.equals(getString(R.string.comma))) {
+                commaTextChanger(opsText, lastChar);
+            } else if (buttonText.equals(getString(R.string.posNeg))) {
+                posNegTextChanger(opsText, lastChar, opsTextFull);
+            } else if (buttonText.equals(getString(R.string.add))) {
+                addTextChanger(opsText, lastChar, buttonText);
+            } else if (buttonText.equals(getString(R.string.divide))) {
+                divTextChanger(opsText, lastChar, buttonText);
+            } else if (buttonText.equals(getString(R.string.subtract))) {
+                subTextChanger(opsText, lastChar, buttonText);
+            } else if (buttonText.equals(getString(R.string.multiply))) {
+                mulTextChanger(opsText, lastChar, buttonText);
+            } else if (buttonText.equals(getString(R.string.sqrt))) {
+                sqrtTextChanger(opsText, lastChar, opsTextFull);
+            } else if (buttonText.equals(getString(R.string.x2))) {
+                x2TextChanger(opsText, lastChar, opsTextFull);
+            } else if (buttonText.equals(getString(R.string.result)) && opsText.length() > 0) {     /* For result button */
+                if(!starting) {                                                                     /* If calculation is not in starting position */
+                    if (checkAtResult) {                          /* If needed to make some additional actions to find the result before printing it */
+                        resultFix_NotOpBefore(opsText);           /* call the appropriate function */
+                    } else {                                      /* otherwise we have the result already so just */
+                        printTextsRight(result, res);             /* print it */
+                        deleteLastChar();                         /* and delete the last char so operations final string is not something like 5+5+ */
+                        operations = ops.getText().toString() + buttonText; /* but 5+5= */
+                        ops.setText(operations);
+                    }
+                } else                                                                              /* Calculation is in starting position */
                 {
-                    res = Math.sqrt(Double.parseDouble(opsText.substring(1)));
-                    printTextsRight(result, res);
-                    operations = ops.getText().toString() + buttonText;
+                    if(opsText.contains(getString(R.string.sqrt)) && opsText.length()>1)            /* If it is something like sqrt(4) just print the result in the right format */
+                    {
+                        res = Math.sqrt(Double.parseDouble(opsText.substring(1)));
+                        printTextsRight(result, res);
+                        operations = ops.getText().toString() + buttonText;
+                        ops.setText(operations);
+                    } else                                                                          /* If it is something like 4 just print in result "4="*/
+                    {
+                        operations = ops.getText().toString() + buttonText;
+                        ops.setText(operations);
+                        result.setText(ops.getText().toString());
+                    }
+                }
+                String toBeSaved = opsFull.getText().toString() + " = " + result.getText().toString();      /* We get the full string of operations and result */
+                operationsFull = opsFull.getText().toString() + buttonText;                                 /* put a "=" at the end of the string with all operations */
+                opsFull.setText(operationsFull);
+                saveHistory(toBeSaved);                                                                     /* And save it at our history database */
+            }
+            else {                                      /* If button is a number just make a simple check and print it */
+                if (!lastChar.equals(getString(R.string.percentage)) && !buttonText.equals(getString(R.string.result))) {
+                    checkAtResult = true;
+                    operations = opsText + buttonText;
+                    operationsFull = opsTextFull + buttonText;
                     ops.setText(operations);
-                } else                                                                          /* If it is something like 4 just print in result "4="*/
-                {
-                    operations = ops.getText().toString() + buttonText;
-                    ops.setText(operations);
-                    result.setText(ops.getText().toString());
+                    opsFull.setText(operationsFull);
                 }
             }
-            String toBeSaved = opsFull.getText().toString() + " = " + result.getText().toString();      /* We get the full string of operations and result */
-            operationsFull = opsFull.getText().toString() + buttonText;                                 /* put a "=" at the end of the string with all operations */
-            opsFull.setText(operationsFull);
-            saveHistory(toBeSaved);                                                                     /* And save it at our history database */
-        }
-        else {                                      /* If button is a number just make a simple check and print it */
-            if (!lastChar.equals(getString(R.string.percentage)) && !buttonText.equals(getString(R.string.result))) {
-                checkAtResult = true;
-                operations = opsText + buttonText;
-                operationsFull = opsTextFull + buttonText;
-                ops.setText(operations);
-                opsFull.setText(operationsFull);
-            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Not supported operation. Check that your calculation is valid or send me an email to check it.", Toast.LENGTH_LONG);
         }
     }
 
@@ -809,7 +813,7 @@ public class MainActivity extends AppCompatActivity {
         if (length >= 0) {
             if (lastChar.equals(getString(R.string.add)) || lastChar.equals(getString(R.string.subtract)) ||
             lastChar.equals(getString(R.string.multiply)) || lastChar.equals(getString(R.string.divide)) ||
-            lastChar.equals(getString(R.string.percentage)) || lastChar.equals(getString(R.string.sqrt))) {
+            lastChar.equals(getString(R.string.sqrt))) {
                 secondOpStartComma = true;
             }
         } else {

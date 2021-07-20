@@ -92,7 +92,9 @@ public class DonationActivity extends AppCompatActivity {
                                 public void onSkuDetailsResponse(@NonNull BillingResult billingResult,
                                                                  List<SkuDetails> skuDetailsList) {
                                     mProducts = skuDetailsList;
-                                    showDonationMethods();
+                                    if(mProducts != null) {
+                                        showDonationMethods();
+                                    }
                                 }
                             });
 

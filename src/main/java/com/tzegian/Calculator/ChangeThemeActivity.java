@@ -26,7 +26,9 @@ public class ChangeThemeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_theme);
 
         Bundle bundle = new Bundle();
-        mFirebaseAnalytics.logEvent("changeThemeView" , bundle);
+        if(mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.logEvent("changeThemeView" , bundle);
+        }
     }
 
     public void onClickChangeTheme(View view) {

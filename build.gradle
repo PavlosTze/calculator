@@ -29,15 +29,15 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.tzegian.Calculator"
         minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 27
-        versionName "1.7.1"
+        targetSdkVersion 30
+        versionCode 28
+        versionName "1.7.2"
     }
     buildTypes {
         release {
