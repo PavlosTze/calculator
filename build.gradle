@@ -1,13 +1,13 @@
 buildscript {
 
     repositories {
-        jcenter()
         google()
+        mavenCentral()
         maven { url 'https://maven.google.com' } // For Gradle < 4.0
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.google.gms:google-services:4.3.10'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,25 +19,25 @@ apply plugin: 'com.google.gms.google-services'
 
 allprojects {
     repositories {
-        jcenter()
         maven {
             url "https://maven.google.com" // Google's Maven repository
         }
         google()
+        mavenCentral()
     }
 
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 32
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.tzegian.Calculator"
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 28
-        versionName "1.7.2"
+        minSdkVersion 23
+        targetSdkVersion 32
+        versionCode 29
+        versionName "1.7.3"
     }
     buildTypes {
         release {
@@ -48,11 +48,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-base:17.1.0'
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'com.android.billingclient:billing:3.0.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.android.billingclient:billing:4.1.0'
+    implementation 'com.google.firebase:firebase-analytics:20.1.0'
+    testImplementation 'junit:junit:4.13'
 }
 
